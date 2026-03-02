@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_5f52c9f219f485ae193ab4a53dd96709 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_5f52c9f219f485ae193ab4a53dd96709" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_5f52c9f219f485ae193ab4a53dd96709 = L.map(
+                "map_5f52c9f219f485ae193ab4a53dd96709",
+                {
+                    center: [30.0444, 31.2357],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_621a0662ac8a15fc82af084a79c397d8 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_621a0662ac8a15fc82af084a79c397d8.addTo(map_5f52c9f219f485ae193ab4a53dd96709);
+        
+    
+            var poly_line_e228295b6f1818fb58594e3a1ee5343c = L.polyline(
+                [[30.07163, 31.2874], [30.07163, 31.2874], [30.07173, 31.28744], [30.07184, 31.28746], [30.07195, 31.28747], [30.07215, 31.28713], [30.07234, 31.28682], [30.07258, 31.28642], [30.0726, 31.2864], [30.07276, 31.28615], [30.07291, 31.28595], [30.07291, 31.28595], [30.07314, 31.28557], [30.07317, 31.28549], [30.07318, 31.2854], [30.07318, 31.28532], [30.07315, 31.28524], [30.07312, 31.28516], [30.07306, 31.2851], [30.07306, 31.2851], [30.07306, 31.2851], [30.0728, 31.2855], [30.07274, 31.28559], [30.07256, 31.28588], [30.07229, 31.28633], [30.0719, 31.28696], [30.07163, 31.2874], [30.07163, 31.2874], [30.07173, 31.28744], [30.07184, 31.28746], [30.07195, 31.28747], [30.07215, 31.28713], [30.07234, 31.28682], [30.07258, 31.28642], [30.0726, 31.2864], [30.07276, 31.28615], [30.07291, 31.28595], [30.07331, 31.28559], [30.07355, 31.28541], [30.07362, 31.28535], [30.07378, 31.28515], [30.07389, 31.28506], [30.07389, 31.28506], [30.07405, 31.28494], [30.07406, 31.28492], [30.07418, 31.28483], [30.07472, 31.28429], [30.07478, 31.28422], [30.07491, 31.28409], [30.07512, 31.28389], [30.07532, 31.28375], [30.07567, 31.28337], [30.07589, 31.28319], [30.07616, 31.2829], [30.0766, 31.28234], [30.07676, 31.28204], [30.07682, 31.28193], [30.07707, 31.28145], [30.07722, 31.281], [30.07734, 31.28064], [30.07738, 31.28043], [30.07741, 31.28018], [30.07746, 31.27996], [30.07748, 31.27972], [30.07747, 31.27946], [30.07743, 31.27921], [30.07737, 31.27898], [30.07725, 31.27871], [30.07689, 31.27775], [30.07671, 31.27729], [30.07668, 31.27723], [30.07609, 31.27583], [30.07591, 31.27542], [30.07575, 31.27509], [30.07496, 31.27348], [30.0749, 31.27338], [30.07485, 31.27328], [30.07467, 31.27303], [30.07452, 31.2728], [30.07451, 31.27278], [30.07405, 31.27212], [30.07339, 31.27131], [30.07312, 31.27101], [30.0726, 31.27046], [30.07229, 31.27013], [30.07196, 31.26981], [30.07173, 31.26957], [30.07158, 31.26942], [30.07114, 31.26891], [30.07094, 31.26867], [30.07088, 31.26859], [30.07059, 31.26819], [30.07053, 31.2681], [30.07033, 31.26781], [30.07009, 31.26741], [30.06978, 31.26689], [30.06962, 31.26663], [30.06927, 31.26598], [30.06917, 31.26581], [30.06913, 31.26574], [30.06912, 31.26572], [30.06907, 31.26563], [30.06901, 31.26555], [30.06901, 31.26555], [30.06892, 31.26542], [30.06882, 31.2653], [30.06872, 31.26519], [30.06863, 31.26506], [30.06855, 31.26493], [30.06849, 31.26479], [30.06843, 31.26464], [30.06828, 31.2642], [30.06778, 31.26288], [30.0675, 31.26208], [30.06721, 31.26129], [30.06705, 31.26079], [30.06686, 31.26029], [30.06676, 31.26004], [30.06665, 31.25979], [30.06663, 31.25974], [30.06651, 31.25949], [30.06637, 31.2592], [30.06569, 31.25752], [30.06368, 31.25234], [30.06352, 31.25198], [30.06335, 31.25149], [30.06312, 31.25088], [30.06285, 31.25021], [30.06255, 31.24945], [30.0622, 31.24862], [30.06216, 31.24851], [30.062, 31.24812], [30.06193, 31.24796], [30.06182, 31.24775], [30.06182, 31.24775], [30.06184, 31.2475], [30.06186, 31.2473], [30.06186, 31.24719], [30.06183, 31.24696], [30.0618, 31.24685], [30.06178, 31.24676], [30.06174, 31.24662], [30.06164, 31.24631], [30.06159, 31.24616], [30.06156, 31.24608], [30.06151, 31.24597], [30.06142, 31.24575], [30.06139, 31.24569], [30.06138, 31.24567], [30.0613, 31.24551], [30.0613, 31.24551], [30.0613, 31.24551], [30.06129, 31.24548], [30.06124, 31.24538], [30.06118, 31.2453], [30.06095, 31.24501], [30.06048, 31.24451], [30.06001, 31.24401], [30.05912, 31.2431], [30.05871, 31.24266], [30.05868, 31.24263], [30.0579, 31.24182], [30.0576, 31.24148], [30.05751, 31.2414], [30.05719, 31.24103], [30.05624, 31.24008], [30.05569, 31.23951], [30.05511, 31.23891], [30.05469, 31.23846]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_5f52c9f219f485ae193ab4a53dd96709);
+        
+    
+            poly_line_e228295b6f1818fb58594e3a1ee5343c.bindTooltip(
+                `<div>
+                     CTA 370 – Abbasseya - Badr (Sheikh Zayed)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d9f97974070afd420d8dabafcfdb466b = L.polyline(
+                [[30.059184, 31.244717]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_5f52c9f219f485ae193ab4a53dd96709);
+        
+    
+            poly_line_d9f97974070afd420d8dabafcfdb466b.bindTooltip(
+                `<div>
+                     Minibus 119 – Bashtil - Masaken Zeinhom
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>
