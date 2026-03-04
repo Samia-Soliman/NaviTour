@@ -5,7 +5,7 @@ from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer, BitsAndB
 from peft import PeftModel
 from huggingface_hub import login
 
-HF_TOKEN = "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"
+HF_TOKEN = "your_token"
 login(HF_TOKEN)
 
 def load_models(adapter_path="nilechat_cairo_final_v1"):
