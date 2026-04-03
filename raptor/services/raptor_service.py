@@ -8,13 +8,21 @@ Created on Fri Feb 27 16:17:18 2026
 # raptor/services/raptor_service.py
 
 from raptor.algorithm import mc_raptor
-from raptor.utils import extract_solutions, reconstruct, collapse_to_legs
+from raptor.utils import extract_solutions, reconstruct, collapse_to_legs, time_to_sec, sec_to_time
 from raptor.output_translation import load_translations, print_legs, print_segments
 from raptor.services.stop_matcher import StopMatcher
 
 
+
 translations_path =  r"D:\G4\graduation project\NaviTour\data\translations.txt"
-def run_raptor_from_assistant_json(network ,assistant_json, departure_time="08:00:00"):
+
+def _segments_are_contiguous(segments):
+    for i in range(len(segments) - 1):
+        if segments[i]["to_stop"] != segments[i + 1]["from_stop"]:
+            return False
+    return True
+
+def run_raptor_from_assistant_json(network ,assistant_json, departure_time="10:00:00"):
     """
     Runs RAPTOR from Cairo assistant JSON.
     Returns formatted legs or an error message.
@@ -45,6 +53,7 @@ def run_raptor_from_assistant_json(network ,assistant_json, departure_time="08:0
 
     print(f" Using stop {origin_id} for origin '{start_name}'")
     print(f" Using stop {destination_id} for destination '{end_name}'")
+    
 
     # -----------------------------
     # Run RAPTOR
@@ -62,7 +71,16 @@ def run_raptor_from_assistant_json(network ,assistant_json, departure_time="08:0
     if not solutions:
         return "Error: No solution found"
 
-    segments = reconstruct(solutions[0])
+    segments = None
+    for sol in solutions:
+        candidate = reconstruct(sol, network)
+        if _segments_are_contiguous(candidate):
+            segments = candidate
+            break
+    if segments is None:
+        # Fallback: keep behavior deterministic even if all candidates are malformed.
+        segments = reconstruct(solutions[0], network)
+
     legs = collapse_to_legs(segments)
     # -----------------------------
     # Load stop translations for readable output

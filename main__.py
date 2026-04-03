@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Feb 27 15:07:48 2026
+Created on Fri Apr  3 16:19:58 2026
 
 @author: Samia
 """
 
-import sys
-import os
-sys.path.insert(0, os.getcwd())
-
+from cairo_assistant.assistant_core import handle_input
 from raptor.services.raptor_service import run_raptor_from_assistant_json
 from raptor.services.map_visualizer import RouteVisualizer
 from raptor.output_translation import load_translations
@@ -16,23 +13,10 @@ from raptor.utils import format_legs
 import pickle
 import webbrowser
 
-
-# Load network once
-# 
 with open("data/network.pkl", "rb") as f:
     network = pickle.load(f)
     
-    
-assistant_json = {"intent": "navigation",
-             "start_point": {"official_name_ar": "رمسيس", "official_name_en": "Ramses"},
-             "end_point": {"official_name_ar": "سيتي سنتر", "official_name_en": "City Center Mall"}}
-# =============================================================================
-# assistant_json ={"intent": "navigation",
-#     "start_point": {"official_name_ar":  "العباسية", "official_name_en": "Abbaseya"},
-#     "end_point": {"official_name_ar": "رمسيس", "official_name_en": "Ramses"}}
-# =============================================================================
-
-
+assistant_json = handle_input('عايز اروح من رمسيس لسيتي سينتر')
 
 legs_or_error = run_raptor_from_assistant_json(network, assistant_json)
 

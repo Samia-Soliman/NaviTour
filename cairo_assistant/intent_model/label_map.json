@@ -1,0 +1,14 @@
+{
+  "label2id": {
+    "general": 0,
+    "greeting": 1,
+    "navigation": 2,
+    "out_of_scope": 3
+  },
+  "id2label": {
+    "0": "general",
+    "1": "greeting",
+    "2": "navigation",
+    "3": "out_of_scope"
+  }
+}

@@ -69,12 +69,18 @@ def mc_raptor(network ,source_id, target_id, departure_time):
                         continue
 
                     last = p
+                    
+                    ##########edit #########
+                    new_transfers = lbl.transfers + 1
+                    ######################
                     for s, arr_t, _ in seq[idx+1:]:
 
+                        
                         new_label = Label(
                             stop=s,               # current stop index
                             time=arr_t,
-                            transfers=lbl.transfers + 1,
+                            #transfers=lbl.transfers + 1,
+                            transfers = new_transfers,
                             prev=lbl,             # previous Label
                             mode=trip             # trip_id
                         )
@@ -105,5 +111,6 @@ def mc_raptor(network ,source_id, target_id, departure_time):
         marked = new_marked
         if not marked:
             break
+        
 
     return B, target

@@ -1,10 +1,5 @@
 import datetime
 from raptor.config import MAX_ROUNDS
-import pickle
-
-
-with open("data/network.pkl", "rb") as f:
-    network = pickle.load(f)
 
 # ------------------ Time utils ------------------
 def time_to_sec(t):
@@ -18,9 +13,26 @@ def extract_solutions(B, target):
     solutions = []
     for r in range(MAX_ROUNDS + 1):
         solutions.extend(B[r][target])
+    # Keep results deterministic: earliest arrival first, then fewer transfers.
+    solutions.sort(key=lambda l: (l.time, l.transfers))
     return solutions
 
-def reconstruct(label):
+# =============================================================================
+# 
+# def extract_solutions(B, target):
+#     final_bag = B[len(B)-1].get(target, [])
+#     seen = set()
+#     solutions = []
+#     for lbl in final_bag:
+#         key = (lbl.time, lbl.transfers)
+#         if key not in seen:
+#             seen.add(key)
+#             solutions.append(lbl)
+#     solutions.sort(key=lambda l: l.time)
+#     return solutions
+# =============================================================================
+
+def reconstruct(label, network):
     """
     Reconstruct full path from mcRAPTOR Label with all intermediate stops.
     Returns a list of dicts:
@@ -62,7 +74,10 @@ def reconstruct(label):
             idx_from = next(i for i, (s, _, _) in enumerate(seq) if s == from_stop_idx)
             idx_to   = next(i for i, (s, _, _) in enumerate(seq) if s == to_stop_idx)
 
-            for i in range(idx_from, idx_to):
+            # We are traversing labels backward (destination -> source), so we must
+            # append this leg's segments in reverse order here; final path[::-1]
+            # will then restore global source -> destination continuity.
+            for i in range(idx_to - 1, idx_from - 1, -1):
                 s_from = seq[i][0]
                 s_to   = seq[i+1][0]
                 route_id = network.trip_to_route[trip_id]

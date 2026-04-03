@@ -6,7 +6,7 @@ Created on Thu Feb 26 16:37:09 2026
 """
 
 from base64 import b64decode
-from .assistant_core import ask_cairo_assistant
+from .assistant_core import handle_input
 import os
 
 # Add ffmpeg to PATH for this Python session
@@ -26,7 +26,7 @@ def process_audio(audio_data, pipe, tokenizer, model):
 
     # Ask chatbot
     print("Generating AI Response...")
-    ai_response, is_nav = ask_cairo_assistant(transcribed_text, tokenizer, model)
+    ai_response = handle_input(transcribed_text)
 
     print("\n" + "="*40)
     print("Assistant Response:")
@@ -37,7 +37,7 @@ def process_audio(audio_data, pipe, tokenizer, model):
     except:
         print(ai_response)
     print("="*40)
-    return ai_response, is_nav
+    return ai_response
     
     
     

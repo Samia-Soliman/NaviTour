@@ -34,5 +34,35 @@ def ask_cairo_assistant(user_query, tokenizer, model):
 
     if is_nav:
         json_match = re.search(r'\{.*\}', response.replace('\n', ''))
-        return json_match.group() if json_match else response.strip(), True
-    return response.split('!')[0].split('.')[0].strip() , False
+        return json_match.group() if json_match else response.strip()
+    return response.split('!')[0].split('.')[0].strip()
+
+
+#####################################################
+#####################################################
+from cairo_assistant.model_manager_ import predict_intent, get_models
+
+
+def handle_input(text):
+    intent = predict_intent(text)
+
+    print(f"[DEBUG] Intent: {intent}")
+
+    # ---------------- NAVIGATION ----------------
+    if intent == "navigation":
+        models = get_models()
+        tokenizer = models["llm_tokenizer"] 
+        model = models["llm_model"]
+        return ask_cairo_assistant(text, tokenizer, model)
+    # ---------------- GREETING ----------------
+    elif intent == "greeting":
+        return "أهلا بيك 👋"
+
+    # ---------------- SUPPORT ----------------
+    elif intent == "support":
+        return "قولّي مشكلتك"
+
+    # ---------------- FALLBACK  ----------------
+    else:
+        
+        return ".........."

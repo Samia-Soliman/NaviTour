@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Feb 27 01:47:36 2026
+Created on Fri Apr  3 16:07:36 2026
 
 @author: Samia
 """
+
 
 import torch, os, json
 from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, AutoModelForSequenceClassification
 from peft import PeftModel
 from huggingface_hub import login, snapshot_download
+from pathlib import Path
 
 # HF login
 HF_TOKEN = "hf_token"
@@ -17,6 +19,7 @@ login(HF_TOKEN)
 # specify a fast SSD cache path
 FAST_HF_CACHE = "C:/Users/samia/.cache/huggingface/hub"  
 os.makedirs(FAST_HF_CACHE, exist_ok=True)
+
 
 def load_models(adapter_path="cairo_assistant/nilechat_cairo_final_v1"):
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -83,5 +86,31 @@ def load_models(adapter_path="cairo_assistant/nilechat_cairo_final_v1"):
         model.eval()
     else:
         raise FileNotFoundError(f"{adapter_path} not found.")
+        
+    # -----------------------------
+    # Intent Model 
+    # -----------------------------
+    raw_path = r"D:\G4\graduation project\NaviTour\cairo_assistant\intent_model"
+    intent_model_path = str(Path(raw_path).resolve())
+    if not os.path.exists(intent_model_path):
+        raise FileNotFoundError(f"{intent_model_path} not found")
+    intent_tokenizer = AutoTokenizer.from_pretrained(intent_model_path, local_files_only=True)
+    intent_model = AutoModelForSequenceClassification.from_pretrained(intent_model_path, local_files_only=True)
 
-    return whisper_pipe, tokenizer, model
+    intent_model.to(device)
+    intent_model.eval()
+
+    with open(os.path.join(intent_model_path, "label_map.json"), "r", encoding="utf-8") as f:
+        label_map = json.load(f)
+
+    id2label = {int(k): v for k, v in label_map["id2label"].items()}
+
+    return {
+    "whisper": whisper_pipe,
+    "llm_tokenizer": tokenizer,
+    "llm_model": model,
+    "intent_tokenizer": intent_tokenizer,
+    "intent_model": intent_model,
+    "id2label": id2label,
+    "device": device
+}

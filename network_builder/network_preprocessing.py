@@ -113,26 +113,114 @@ def build_network(m_dir, s_dir):
             stop_to_routes[stop].add(route)
     
     # ------------------ Build walking transfers  ------------------
+# =============================================================================
+#     coords = np.radians(stops[['stop_lat', 'stop_lon']].values)
+#     tree = BallTree(coords, metric='haversine')
+#     radius = MAX_WALK / EARTH_RADIUS
+#     neighbors = tree.query_radius(coords, r=radius)
+#     
+#     walk_transfers = defaultdict(list)
+#     
+#     for i, neigh in enumerate(neighbors):
+#         for j in neigh:
+#             if i == j:
+#                 continue
+#     
+#             # BLOCK walking between stops sharing any route
+#             if stop_to_routes[i] & stop_to_routes[j]:
+#                 continue
+#     
+#             d = EARTH_RADIUS * np.linalg.norm(coords[i] - coords[j])
+#             walk_time = int(d / WALK_SPEED)
+#             walk_transfers[i].append((j, walk_time))
+# 
+
+# =============================================================================
+#     coords = np.radians(stops[['stop_lat', 'stop_lon']].values)
+#     tree = BallTree(coords, metric='haversine')
+#     radius = MAX_WALK / EARTH_RADIUS
+#     neighbors, dist  = tree.query_radius(coords, r=radius, return_distance=True)
+#     
+#     walk_transfers = defaultdict(list)
+#     
+#     for i, neigh in enumerate(neighbors):
+#         for k, j in enumerate(neigh):
+#             if i == j:
+#                 continue
+#                 
+#             d = dist[i][k] * EARTH_RADIUS
+#             # BLOCK walking between stops sharing any route
+#             if stop_to_routes[i] & stop_to_routes[j] and d < 39:
+#                 continue
+#     
+#             
+#             walk_time = int(d / WALK_SPEED)
+#             walk_transfers[i].append((j, walk_time))
+#             walk_transfers[j].append((i, walk_time))
+# =============================================================================
+
     coords = np.radians(stops[['stop_lat', 'stop_lon']].values)
     tree = BallTree(coords, metric='haversine')
     radius = MAX_WALK / EARTH_RADIUS
-    neighbors = tree.query_radius(coords, r=radius)
-    
-    walk_transfers = defaultdict(list)
-    
-    for i, neigh in enumerate(neighbors):
-        for j in neigh:
-            if i == j:
-                continue
-    
-            # BLOCK walking between stops sharing any route
-            if stop_to_routes[i] & stop_to_routes[j]:
-                continue
-    
-            d = EARTH_RADIUS * np.linalg.norm(coords[i] - coords[j])
-            walk_time = int(d / WALK_SPEED)
-            walk_transfers[i].append((j, walk_time))
+    neighbors, dist  = tree.query_radius(coords, r=radius, return_distance=True)
 
+    walk_transfers = defaultdict(list)
+    # Updated logic to handle Metro transfers and Ramses hubs
+    for i, neigh in enumerate(neighbors):
+        for k, j in enumerate(neigh):
+            if i == j: continue
+                
+# =============================================================================
+#             d = dist[i][k] * EARTH_RADIUS
+#             name_i = stops.iloc[i]['stop_name']
+#             name_j = stops.iloc[j]['stop_name']
+#     
+#             # 1. THE NAME BRIDGE: If they have the EXACT same name, 
+#             # they are likely different platforms/floors of the same station.
+#             if name_i == name_j :
+#                 # Force a 3-minute (180s) transfer time for changing levels
+#                 walk_time = 180 
+#             else:
+#                 # 2. THE DISTANCE BRIDGE: Standard walking speed
+#                 walk_time = int(d / WALK_SPEED)
+#               walk_transfers[i].append((j, walk_time))
+# =============================================================================
+
+
+            d_meters = dist[i][k] * EARTH_RADIUS 
+            name_i = stops.iloc[i]['stop_name']
+            name_j = stops.iloc[j]['stop_name']
+        
+                # 1. لو المحطتين ليهم نفس الاسم (غالباً أرصفة مترو أو مجمعات مواقف)
+            if name_i == name_j:
+                    # لو المسافة بينهم أقل من 300 متر، اعتبرهم "محطة واحدة" بتبديل داخلي
+                if d_meters < 300:
+                    walk_time = 180  # 3 دقائق وقت ثابت للتبديل بين الأرصفة
+                else:
+                        # لو الاسم متشابه والمسافة بعيدة، ده "تشابه أسماء" خ                        # هنحسب المشي الطبيعي ونرفضه لو بعيد جداً
+                    walk_time = int(d_meters / WALK_SPEED)
+            
+                # 2. لو محطات بأسماء مختلفة
+            else:
+                walk_time = int(d_meters / WALK_SPEED)
+        
+                # --- صمامات الأمان لمنع الـ Gaps ---
+            
+                # أ: مفيش "مشي" بين محطتين (مختلفتين كـ Index) يقل عن دقيقة و                # ده بيمنع الألجورزم إنه "ينط" بين المحطات المتلاصقة في ثانية واحدة
+            if i != j:
+                walk_time = max(walk_time, 90) 
+        
+                # ب: لو وقت المشي طلع ضخم جداً (أكبر من نصف ساعة مثلاً)، ارفضه
+            if walk_time > 1800: 
+                continue
+        
+           # walk_transfers[i].append((j, walk_time))
+            # IMPORTANT: Remove that "if stop_to_routes" block here!
+            # We WANT to allow walking even if they share a route.
+            # walk_transfers[sid_i].append((sid_j, walk_time))
+            walk_transfers[i].append((j, walk_time))
+            walk_transfers[j].append((i, walk_time))
+# =============================================================================
     # ------------------ Assign everything to Network object ------------------
     net.stops = stops
     net.stop_times = stop_times
