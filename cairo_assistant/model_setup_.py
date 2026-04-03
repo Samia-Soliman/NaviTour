@@ -15,7 +15,7 @@ HF_TOKEN = "hf_token"
 login(HF_TOKEN)
 
 # specify a fast SSD cache path
-FAST_HF_CACHE = "C:/Users/samia/.cache/huggingface/hub"  
+FAST_HF_CACHE = "C:/Users/user/.cache/huggingface/hub"  
 os.makedirs(FAST_HF_CACHE, exist_ok=True)
 
 def load_models(adapter_path="cairo_assistant/nilechat_cairo_final_v1"):
