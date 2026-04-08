@@ -53,16 +53,16 @@ def handle_input(text):
         models = get_models()
         tokenizer = models["llm_tokenizer"] 
         model = models["llm_model"]
-        return ask_cairo_assistant(text, tokenizer, model)
+        return ask_cairo_assistant(text, tokenizer, model), True
     # ---------------- GREETING ----------------
     elif intent == "greeting":
-        return "أهلا بيك 👋"
+        return "أهلا بيك 👋", False
 
     # ---------------- SUPPORT ----------------
     elif intent == "support":
-        return "قولّي مشكلتك"
+        return "قولّي مشكلتك", False
 
     # ---------------- FALLBACK  ----------------
     else:
         
-        return ".........."
+        return "..........", False

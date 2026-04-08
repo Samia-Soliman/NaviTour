@@ -26,7 +26,7 @@ def process_audio(audio_data, pipe, tokenizer, model):
 
     # Ask chatbot
     print("Generating AI Response...")
-    ai_response = handle_input(transcribed_text)
+    ai_response, is_nav = handle_input(transcribed_text)
 
     print("\n" + "="*40)
     print("Assistant Response:")
@@ -37,7 +37,7 @@ def process_audio(audio_data, pipe, tokenizer, model):
     except:
         print(ai_response)
     print("="*40)
-    return ai_response
+    return ai_response, is_nav
     
     
     
