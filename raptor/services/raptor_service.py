@@ -22,6 +22,25 @@ def _segments_are_contiguous(segments):
             return False
     return True
 
+
+def _select_best_contiguous_path(solutions, network):
+    valid_paths = []
+
+    for sol in solutions:
+        candidate = reconstruct(sol, network)
+        if _segments_are_contiguous(candidate):
+            valid_paths.append({
+                "segments": candidate,
+                "arrival_time": sol.time,
+                "transfers": sol.transfers,
+            })
+
+    if not valid_paths:
+        return None
+
+    valid_paths.sort(key=lambda path: (path["arrival_time"], path["transfers"]))
+    return valid_paths[0]["segments"]
+
 def run_raptor_from_assistant_json(network ,assistant_json, departure_time="10:00:00"):
     """
     Runs RAPTOR from Cairo assistant JSON.
@@ -71,12 +90,7 @@ def run_raptor_from_assistant_json(network ,assistant_json, departure_time="10:0
     if not solutions:
         return "Error: No solution found"
 
-    segments = None
-    for sol in solutions:
-        candidate = reconstruct(sol, network)
-        if _segments_are_contiguous(candidate):
-            segments = candidate
-            break
+    segments = _select_best_contiguous_path(solutions, network)
     if segments is None:
         # Fallback: keep behavior deterministic even if all candidates are malformed.
         segments = reconstruct(solutions[0], network)
