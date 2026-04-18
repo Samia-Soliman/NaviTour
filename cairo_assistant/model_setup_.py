@@ -11,7 +11,7 @@ from peft import PeftModel
 from huggingface_hub import login, snapshot_download
 
 # HF login
-HF_TOKEN = "hf_token"
+HF_TOKEN = "HF_TOKEN"
 login(HF_TOKEN)
 
 # specify a fast SSD cache path

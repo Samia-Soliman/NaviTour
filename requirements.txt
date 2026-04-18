@@ -1,0 +1,6 @@
+flask
+folium
+huggingface_hub
+peft
+torch
+transformers

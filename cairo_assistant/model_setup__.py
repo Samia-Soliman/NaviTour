@@ -13,15 +13,14 @@ from huggingface_hub import login, snapshot_download
 from pathlib import Path
 
 # HF login
-HF_TOKEN = "hf_token"
+HF_TOKEN = "HF_TOKEN"
 login(HF_TOKEN)
-
 # specify a fast SSD cache path
 FAST_HF_CACHE = "C:/Users/samia/.cache/huggingface/hub"  
 os.makedirs(FAST_HF_CACHE, exist_ok=True)
 
 
-def load_models(adapter_path="cairo_assistant/nilechat_cairo_final_v1"):
+def load_models():
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     # -----------------------------
@@ -49,6 +48,9 @@ def load_models(adapter_path="cairo_assistant/nilechat_cairo_final_v1"):
     # NileChat 4B
     # -----------------------------
     base_model_id = "MBZUAI-Paris/Nile-Chat-4B"
+    adapter_model_id = "hananelhosary8/Nile-Chat-4B-Cairo-Transit-Extractor"
+
+
 
     # Pre-download model to fast cache
     local_nile_path = snapshot_download(
@@ -63,7 +65,8 @@ def load_models(adapter_path="cairo_assistant/nilechat_cairo_final_v1"):
         bnb_4bit_quant_type="nf4",
         bnb_4bit_compute_dtype=torch.bfloat16
     )
-
+    
+    print("Loading Cairo Assistant from Hugging Face... please wait.")
     tokenizer = AutoTokenizer.from_pretrained(local_nile_path)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
@@ -77,16 +80,29 @@ def load_models(adapter_path="cairo_assistant/nilechat_cairo_final_v1"):
         local_nile_path,
         quantization_config=bnb_config,
         device_map=device_map,
-        low_cpu_mem_usage=False,  # load fully into GPU for speed
+        low_cpu_mem_usage=True,  # load fully into GPU for speed
     )
-
-    # Load PEFT adapter
-    if os.path.exists(adapter_path):
-        model = PeftModel.from_pretrained(base_model, adapter_path, local_files_only=True)
+    
+    try:
+        model = PeftModel.from_pretrained(
+            base_model,
+            adapter_model_id
+        )
         model.eval()
-    else:
-        raise FileNotFoundError(f"{adapter_path} not found.")
-        
+        print("All Models Loaded Successfully from the Cloud!")
+    except Exception as e:
+        print("Error: Could not load adapter from Hugging Face.")
+        print(e)
+
+# =============================================================================
+#     # Load PEFT adapter
+#     if os.path.exists(adapter_path):
+#         model = PeftModel.from_pretrained(base_model, adapter_path, local_files_only=True)
+#         model.eval()
+#     else:
+#         raise FileNotFoundError(f"{adapter_path} not found.")
+#         
+# =============================================================================
     # -----------------------------
     # Intent Model 
     # -----------------------------

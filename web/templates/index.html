@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NaviTour Chatbot</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <p class="eyebrow">NaviTour</p>
+      <h1>شات بوت مواصلات القاهرة</h1>
+      <p class="subtitle">اكتب المكان اللي هتتحرك منه وإلى فين، أو استخدم الميكروفون، والنظام هيرجع أفضل مسار مع إمكانية سماع الرد بالصوت.</p>
+    </section>
+
+    <div class="chat-map-container">
+        <section class="chat-panel">
+          <div id="messages" class="messages">
+            <article class="message bot">
+              <p>أهلا بيك. مثال: عايز أروح من رمسيس للمعادي</p>
+              <button type="button" class="speak-button" data-speak="أهلا بيك. مثال: عايز أروح من رمسيس للمعادي">تشغيل الرد</button>
+            </article>
+          </div>
+    
+          <form id="chat-form" class="composer">
+            <textarea id="message-input" name="message" rows="2" placeholder="اكتب رسالتك هنا..." required></textarea>
+            <div class="composer-actions">
+              <button id="send-button" type="submit">إرسال</button>
+              <button id="voice-button" type="button">تسجيل صوتي</button>
+              <label class="voice-toggle">
+                <input id="auto-speak-toggle" type="checkbox" checked>
+                <span>تشغيل الصوت تلقائيا</span>
+              </label>
+            </div>
+          </form>
+          <p id="voice-status" class="voice-status">يمكنك تسجيل رسالة صوتية وسيتم تفريغها باستخدام Whisper على السيرفر.</p>
+        </section>
+    </div>
+    <section class="map-panel">
+        <iframe id="map-frame" src="" frameborder="0"></iframe>
+    </section>
+  </main>
+
+  <template id="message-template">
+    <article class="message">
+      <p class="message-text"></p>
+    </article>
+  </template>
+
+  <script>
+    const form = document.getElementById("chat-form");
+    const input = document.getElementById("message-input");
+    const messages = document.getElementById("messages");
+    const button = document.getElementById("send-button");
+    const voiceButton = document.getElementById("voice-button");
+    const autoSpeakToggle = document.getElementById("auto-speak-toggle");
+    const voiceStatus = document.getElementById("voice-status");
+    const template = document.getElementById("message-template");
+    const supportsSpeech = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+    const supportsRecording = Boolean(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let mediaStream = null;
+    let isRecording = false;
+
+    function updateVoiceStatus(text) {
+      voiceStatus.textContent = text;
+    }
+
+    function setComposerBusy(isBusy, buttonText = "إرسال") {
+      button.disabled = isBusy;
+      voiceButton.disabled = isBusy || !supportsRecording;
+      button.textContent = buttonText;
+    }
+
+    function speakText(text) {
+      if (!supportsSpeech || !text) {
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "ar-EG";
+      utterance.rate = 1;
+      utterance.pitch = 1;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function createSpeakButton(text) {
+      const speakButton = document.createElement("button");
+      speakButton.type = "button";
+      speakButton.className = "speak-button";
+      speakButton.dataset.speak = text;
+      speakButton.textContent = "تشغيل الرد";
+      return speakButton;
+    }
+
+    function appendMessage(text, role, extraHtml = "") {
+      const node = template.content.firstElementChild.cloneNode(true);
+      node.classList.add(role);
+      node.querySelector(".message-text").textContent = text;
+      if (extraHtml) {
+        const extra = document.createElement("div");
+        extra.className = "extra";
+        extra.innerHTML = extraHtml;
+        node.appendChild(extra);
+      }
+      if (role === "bot" && supportsSpeech) {
+        node.appendChild(createSpeakButton(text));
+      }
+      messages.appendChild(node);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function renderResponse(data, role = "bot") {
+      let extraHtml = "";
+
+      if (data.extractor_output) {
+        extraHtml += `
+          <div class="card">
+            <h3>Extractor JSON</h3>
+            <pre>${JSON.stringify(data.extractor_output, null, 2)}</pre>
+          </div>
+        `;
+      }
+
+      if (data.route && data.route.formatted_legs) {
+        extraHtml += `
+          <div class="card">
+            <h3>Route Steps</h3>
+            <ul>${data.route.formatted_legs.map(step => `<li>${step}</li>`).join("")}</ul>
+          </div>
+        `;
+      }
+    if (data.map_url) {
+      const mapFrame = document.getElementById("map-frame");
+      if (mapFrame) {
+        mapFrame.src = data.map_url;
+      }
+    }
+
+      const assistantText = data.assistant_message || "No response";
+      appendMessage(assistantText, role, extraHtml);
+      if (role === "bot" && autoSpeakToggle.checked) {
+        speakText(assistantText);
+      }
+    }
+
+    async function sendMessage(message) {
+      appendMessage(message, "user");
+      if (supportsSpeech) {
+        window.speechSynthesis.cancel();
+      }
+      input.value = "";
+      setComposerBusy(true, "جارٍ الإرسال...");
+      updateVoiceStatus("جاري إرسال الرسالة...");
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await response.json();
+        if (!response.ok || data.error) {
+          renderResponse(data, "error");
+          return;
+        }
+
+        renderResponse(data, "bot");
+      } catch (error) {
+        appendMessage("حصل خطأ أثناء الاتصال بالسيرفر.", "error");
+      } finally {
+        setComposerBusy(false);
+        updateVoiceStatus("جاهز للكتابة أو التسجيل الصوتي.");
+        input.focus();
+      }
+    }
+
+    async function transcribeAudio(blob) {
+      const extension = blob.type.includes("ogg") ? "ogg" : blob.type.includes("mp4") ? "mp4" : "webm";
+      const formData = new FormData();
+      formData.append("audio", blob, `voice-message.${extension}`);
+
+      setComposerBusy(true, "جارٍ التفريغ...");
+      updateVoiceStatus("جاري تحويل الصوت إلى نص باستخدام Whisper...");
+
+      try {
+        const response = await fetch("/api/transcribe", {
+          method: "POST",
+          body: formData
+        });
+        const data = await response.json();
+        if (!response.ok || data.error) {
+          throw new Error(data.error || "Transcription failed");
+        }
+        input.value = data.text || "";
+        updateVoiceStatus("تم تفريغ الصوت. يمكنك التعديل أو الضغط على إرسال.");
+        input.focus();
+      } catch (error) {
+        updateVoiceStatus("فشل تحويل الصوت إلى نص.");
+        appendMessage("تعذر تحويل الصوت إلى نص.", "error");
+      } finally {
+        setComposerBusy(false);
+      }
+    }
+
+    async function startRecording() {
+      mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioChunks = [];
+      mediaRecorder = new MediaRecorder(mediaStream);
+
+      mediaRecorder.addEventListener("dataavailable", (event) => {
+        if (event.data && event.data.size > 0) {
+          audioChunks.push(event.data);
+        }
+      });
+
+      mediaRecorder.addEventListener("stop", async () => {
+        const mimeType = mediaRecorder.mimeType || "audio/webm";
+        const audioBlob = new Blob(audioChunks, { type: mimeType });
+        mediaStream.getTracks().forEach(track => track.stop());
+        mediaStream = null;
+        audioChunks = [];
+        await transcribeAudio(audioBlob);
+      });
+
+      mediaRecorder.start();
+      isRecording = true;
+      voiceButton.textContent = "إيقاف التسجيل";
+      updateVoiceStatus("جاري التسجيل... اضغط مرة أخرى عند الانتهاء.");
+    }
+
+    function stopRecording() {
+      if (!mediaRecorder || mediaRecorder.state === "inactive") {
+        return;
+      }
+      isRecording = false;
+      voiceButton.textContent = "تسجيل صوتي";
+      updateVoiceStatus("جاري تجهيز الملف الصوتي...");
+      mediaRecorder.stop();
+    }
+
+    messages.addEventListener("click", (event) => {
+      const speakTrigger = event.target.closest(".speak-button");
+      if (!speakTrigger) {
+        return;
+      }
+      speakText(speakTrigger.dataset.speak || "");
+    });
+
+    if (!supportsRecording) {
+      voiceButton.disabled = true;
+      updateVoiceStatus("المتصفح الحالي لا يدعم تسجيل الصوت من الصفحة.");
+    }
+
+    voiceButton.addEventListener("click", async () => {
+      if (!supportsRecording) {
+        return;
+      }
+
+      if (isRecording) {
+        stopRecording();
+        return;
+      }
+
+      try {
+        await startRecording();
+      } catch (error) {
+        updateVoiceStatus("تعذر الوصول إلى الميكروفون.");
+      }
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const message = input.value.trim();
+      if (!message) {
+        return;
+      }
+
+      await sendMessage(message);
+    });
+  </script>
+</body>
+</html>

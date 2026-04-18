@@ -1,0 +1,19 @@
+route_id,service_id,trip_id,trip_headsign,direction_id,shape_id
+
+1,weekday,1_out,موقف كفر الشيخ,0,1
+1,weekday,1_ret,بوابة الجامعة,1,1
+
+2,weekday,2_out,موقف كفر الشيخ,0,2
+2,weekday,2_ret,محطة كفر الشيخ,1,2
+
+3,weekday,3_out,موقف كفر الشيخ,0,3
+3,weekday,3_ret,ميدان أحمد زويل,1,3
+
+4,weekday,4_out,موقف كفر الشيخ,0,4
+4,weekday,4_ret,الإنشاء والتعمير,1,4
+
+5,weekday,5_out,موقف عبود,0,5
+5,weekday,5_ret,موقف كفر الشيخ الجديد,1,5
+
+6,weekday,6_out,بوابة الجامعة,0,1
+6,weekday,6_ret,موقف كفر الشيخ,1,1

@@ -32,7 +32,7 @@ class StopMatcher:
 
         # Build Arabic index from the network DataFrame
         for _, stop in network.stops.iterrows():
-            stop_id = stop['stop_id']  # ✅ prefixed S_ / M_
+            stop_id = stop['stop_id']  
             arabic_name = stop_name_func(stop_id)
             if arabic_name:
                 norm_name = normalize_arabic(arabic_name)

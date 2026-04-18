@@ -34,9 +34,7 @@ with open("data/network.pkl", "rb") as f:
 #     "end_point": {"official_name_ar": "رمسيس", "official_name_en": "Ramses"}}
 # =============================================================================
 
-assistant_json = {"intent": "navigation",
-             "start_point": {"official_name_ar": "مدينة نصر", "official_name_en": "Ramses"},
-             "end_point": {"official_name_ar": "المعادي", "official_name_en": "City Center Mall"}}
+assistant_json = {"start_point": "رمسيس", "end_point": "العباسية"}
 
 legs_or_error = run_raptor_from_assistant_json(network, assistant_json)
 

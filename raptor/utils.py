@@ -164,3 +164,22 @@ def format_legs(legs):
 
     return lines
 
+
+def format_legs(legs, stop_name_func=None):
+    lines = []
+
+    for leg in legs:
+        from_stop = stop_name_func(leg["from_stop"]) if stop_name_func else leg["from_stop"]
+        to_stop = stop_name_func(leg["to_stop"]) if stop_name_func else leg["to_stop"]
+
+        if leg["mode"] == "WALK":
+            lines.append(f"WALK: {from_stop} → {to_stop}")
+        else:
+            route_name = f"{leg['route_short']} ({leg['route_long']})"
+            lines.append(
+                f"{leg['agency']} | {route_name}\n"
+                f"  {from_stop} → {to_stop}"
+            )
+
+    return lines
+

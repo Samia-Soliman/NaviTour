@@ -5,13 +5,15 @@ Created on Thu Feb 26 16:37:18 2026
 @author: Samia
 """
 
-from .model_manager import get_models
+from .model_manager_ import get_models
 from .audio_utils import process_audio, record_live_audio
 from raptor.services.raptor_service import run_raptor_from_assistant_json
 
 def main():
-    pipe, tokenizer, model = get_models()
-
+    models = get_models()
+    pipe = models["whisper"]
+    tokenizer = models["llm_tokenizer"]
+    model = models["model"]
     while True:
         audio_b64 = record_live_audio()
         response, is_nav = process_audio(audio_b64, pipe, tokenizer, model)
