@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_6ad00aae598be1ac516d046e6aa8f602 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_6ad00aae598be1ac516d046e6aa8f602" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_6ad00aae598be1ac516d046e6aa8f602 = L.map(
+                "map_6ad00aae598be1ac516d046e6aa8f602",
+                {
+                    center: [30.0444, 31.2357],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_c911e97f4477126a2a2de2797fffab4b = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_c911e97f4477126a2a2de2797fffab4b.addTo(map_6ad00aae598be1ac516d046e6aa8f602);
+        
+    
+            var poly_line_ae37b324ca792596950e677eb43c83e7 = L.polyline(
+                [[30.060504, 31.246092], [30.061206, 31.246949], [30.061422, 31.2473], [30.061832, 31.248088]],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1f77b4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 2, "stroke": true, "weight": 6}
+            ).addTo(map_6ad00aae598be1ac516d046e6aa8f602);
+        
+    
+            poly_line_ae37b324ca792596950e677eb43c83e7.bindTooltip(
+                `<div>
+                     مينى باص 120 - ابو وافية - زهراء مدينة نصر
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_85c7037c436d27f588b5755378cf2159 = L.circleMarker(
+                [30.060660176565182, 31.246266924895693],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6ad00aae598be1ac516d046e6aa8f602);
+        
+    
+            circle_marker_85c7037c436d27f588b5755378cf2159.bindTooltip(
+                `<div>
+                     رمسيس
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c43121c7bb7e9d3d2ba08f21373a529f = L.circleMarker(
+                [30.061871297064958, 31.24813982808145],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6ad00aae598be1ac516d046e6aa8f602);
+        
+    
+            circle_marker_c43121c7bb7e9d3d2ba08f21373a529f.bindTooltip(
+                `<div>
+                     محطة سكة حديد رمسيس
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_6801401522f76be16c488ea5fd8ac593 = L.polyline(
+                [[30.061871297064958, 31.24813982808145], [30.061058, 31.246288]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": "5,5", "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 2, "stroke": true, "weight": 6}
+            ).addTo(map_6ad00aae598be1ac516d046e6aa8f602);
+        
+    
+            poly_line_6801401522f76be16c488ea5fd8ac593.bindTooltip(
+                `<div>
+                     WALK
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_1916420f3ca68deb988dec3e9b4d298d = L.polyline(
+                [[30.061285, 31.246294], [30.061647, 31.246296], [30.061655, 31.246298], [30.061659, 31.246296], [30.061674, 31.246277], [30.06245, 31.245293], [30.062706, 31.245066], [30.0632, 31.244888], [30.0635, 31.24489], [30.06539, 31.245167], [30.066353, 31.245152], [30.06834, 31.24511], [30.069534, 31.245096], [30.071047, 31.24507], [30.07204, 31.245085], [30.072899, 31.245096], [30.07359, 31.245087], [30.074593, 31.245075], [30.075497, 31.245064], [30.076225, 31.245153], [30.076502, 31.245153], [30.077105, 31.245176], [30.078691, 31.245258], [30.079058, 31.245272], [30.08057, 31.245459]],
+                {"bubblingMouseEvents": true, "color": "#bcbd22", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#bcbd22", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 2, "stroke": true, "weight": 6}
+            ).addTo(map_6ad00aae598be1ac516d046e6aa8f602);
+        
+    
+            poly_line_1916420f3ca68deb988dec3e9b4d298d.bindTooltip(
+                `<div>
+                     M2 - Metro Line 2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e91147260a3360a4e1f7af54f788177c = L.circleMarker(
+                [30.061058, 31.246288],
+                {"bubblingMouseEvents": true, "color": "#bcbd22", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#bcbd22", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6ad00aae598be1ac516d046e6aa8f602);
+        
+    
+            circle_marker_e91147260a3360a4e1f7af54f788177c.bindTooltip(
+                `<div>
+                     Al-Shohadaa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_502c7782c912b2d8381822061ed5ea34 = L.circleMarker(
+                [30.070887, 31.245071],
+                {"bubblingMouseEvents": true, "color": "#bcbd22", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#bcbd22", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6ad00aae598be1ac516d046e6aa8f602);
+        
+    
+            circle_marker_502c7782c912b2d8381822061ed5ea34.bindTooltip(
+                `<div>
+                     مسرة
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_df2fd95b060069fc10f2b4fa4d0b6f9f = L.circleMarker(
+                [30.08059, 31.245459],
+                {"bubblingMouseEvents": true, "color": "#bcbd22", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#bcbd22", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6ad00aae598be1ac516d046e6aa8f602);
+        
+    
+            circle_marker_df2fd95b060069fc10f2b4fa4d0b6f9f.bindTooltip(
+                `<div>
+                     Rod El Farag
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_2071a8d72956ae642403cd1e11425f21 = L.polyline(
+                [[30.08059, 31.245459], [30.078138523988308, 31.245219597305493]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": "5,5", "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 2, "stroke": true, "weight": 6}
+            ).addTo(map_6ad00aae598be1ac516d046e6aa8f602);
+        
+    
+            poly_line_2071a8d72956ae642403cd1e11425f21.bindTooltip(
+                `<div>
+                     WALK
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ab75610d0935e426eafe55af7a6d65cb = L.marker(
+                [30.060660176565182, 31.246266924895693],
+                {
+}
+            ).addTo(map_6ad00aae598be1ac516d046e6aa8f602);
+        
+    
+            var icon_7fe4367a9c19e29f7fb6edcfe3786084 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_ab75610d0935e426eafe55af7a6d65cb.bindTooltip(
+                `<div>
+                     Start: رمسيس
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ab75610d0935e426eafe55af7a6d65cb.setIcon(icon_7fe4367a9c19e29f7fb6edcfe3786084);
+            
+    
+            var marker_51dfe1e75b85caf8c07c227c3054ba9f = L.marker(
+                [30.078138523988308, 31.245219597305493],
+                {
+}
+            ).addTo(map_6ad00aae598be1ac516d046e6aa8f602);
+        
+    
+            var icon_07730e624ae70b8b545ea64c7cc2f1c7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_51dfe1e75b85caf8c07c227c3054ba9f.bindTooltip(
+                `<div>
+                     End: الراعي الصالح
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_51dfe1e75b85caf8c07c227c3054ba9f.setIcon(icon_07730e624ae70b8b545ea64c7cc2f1c7);
+            
+</script>
+</html>

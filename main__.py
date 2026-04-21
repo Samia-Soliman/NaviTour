@@ -16,9 +16,9 @@ import webbrowser
 with open("data/network.pkl", "rb") as f:
     network = pickle.load(f)
     
-assistant_json = handle_input('عايز اروح من رمسيس لسيتي سينتر')
+assistant_json = handle_input('عايز اروح من رمسيس لسيتي سنتر')
 
-legs_or_error = run_raptor_from_assistant_json(network, assistant_json)
+legs_or_error = run_raptor_from_assistant_json(network, assistant_json[0])
 
 if isinstance(legs_or_error, dict) and "error" in legs_or_error:
     print("❗", legs_or_error["message"])

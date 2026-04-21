@@ -11,7 +11,13 @@ from raptor.algorithm import mc_raptor
 from raptor.utils import extract_solutions, reconstruct, collapse_to_legs, time_to_sec, sec_to_time
 from raptor.output_translation import get_translators, print_legs, print_segments, translate_route_names
 from raptor.services.stop_matcher import StopMatcher
+import os
 
+
+# =============================================================================
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# translations_path = os.path.join(BASE_DIR, "data", "translations.txt")
+# =============================================================================
 
 
 translations_path =  r"D:\G4\graduation project\NaviTour\data\translations.txt"
@@ -60,7 +66,6 @@ def run_raptor_from_assistant_json(network ,assistant_json, departure_time="10:0
     Runs RAPTOR from Cairo assistant JSON.
     Returns formatted legs or an error message.
     """
-
     if not isinstance(assistant_json, dict):
         return (
             "Error: Invalid navigation payload. Expected a JSON object with "

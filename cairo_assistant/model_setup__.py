@@ -16,7 +16,8 @@ from pathlib import Path
 HF_TOKEN = "HF_TOKEN"
 login(HF_TOKEN)
 # specify a fast SSD cache path
-FAST_HF_CACHE = "C:/Users/samia/.cache/huggingface/hub"  
+FAST_HF_CACHE = Path.home() / ".cache" / "huggingface" / "hub"
+
 os.makedirs(FAST_HF_CACHE, exist_ok=True)
 
 

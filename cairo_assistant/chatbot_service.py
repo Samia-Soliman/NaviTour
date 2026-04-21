@@ -272,6 +272,7 @@ def extract_navigation_json(user_query: str) -> dict[str, Any] | None:
         skip_special_tokens=True,
     ).strip()
 
+    
     for candidate in [raw_response, *_extract_json_candidates(raw_response)]:
         try:
             parsed = json.loads(candidate)
@@ -342,6 +343,7 @@ def process_chat_message(user_message: str) -> dict[str, Any]:
 
     extractor_output = extract_navigation_json(text)
     if extractor_output is None:
+        print(extractor_output, intent)
         return {
             "intent": intent,
             "assistant_message": "فهمت إنك عايز مسار، لكن ماقدرتش أحدد البداية والنهاية بشكل واضح.",

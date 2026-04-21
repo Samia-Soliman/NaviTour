@@ -30,12 +30,17 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 navitour_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "NaviTour")
 sys.path.insert(0, navitour_path)
 
-from fastapi import FastAPI, APIRouter, Query, Body, HTTPException
+from fastapi import FastAPI, APIRouter, Query, Body, HTTPException, Request, UploadFile, File
 from pydantic import BaseModel
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from sqlalchemy import create_engine, text
 import pickle
+from pathlib import Path
+
 
 # Team handoff:
 # `DialogueManager` is still owned by the routing/chat flow.
@@ -48,6 +53,11 @@ from live_location import (
     get_live_location_payload,
     normalize_session_id,
     update_tracked_live_location,
+)
+from cairo_assistant.chatbot_service import (
+    MAPS_DIR,
+    process_chat_message,
+    transcribe_audio_bytes,
 )
 
 # =========================
@@ -101,6 +111,10 @@ class LiveLocationIn(BaseModel):
 
 class LiveLocationClearIn(BaseModel):
     session_id: Optional[str] = None
+
+
+class ChatPayload(BaseModel):
+    message: str = ""
 # =============================================================================
 # 
 # def _get_dialogue_manager(session_id: Optional[str]):
@@ -722,9 +736,60 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def root():
-    return {"status": "NaviTour API running"}
+BASE_DIR = Path(__file__).resolve().parent.parent  
+templates = Jinja2Templates(directory=str(BASE_DIR / "web" / "templates"))
+
+app.mount(
+    "/static",
+    StaticFiles(directory=str(BASE_DIR / "web" / "static")),
+    name="static"
+)
+
+app.mount("/maps", StaticFiles(directory=str(MAPS_DIR)), name="maps")
+
+
+@app.get("/", include_in_schema=False)
+async def root():
+    return RedirectResponse(url="/onboarding", status_code=307)
+
+
+@app.get("/onboarding", response_class=HTMLResponse)
+async def onboarding_page(request: Request):
+    return templates.TemplateResponse(
+        request=request, 
+        name="onboarding.html"
+    )
+
+@app.get("/chat", response_class=HTMLResponse)
+async def chat_page(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html"
+    )
+
+@app.get("/map.html", response_class=HTMLResponse)
+async def map_page(request: Request):
+    return templates.TemplateResponse(
+        request=request, 
+        name="map.html"
+    )
+
+
+@app.post("/api/chat", tags=["chatbot"])
+async def chat(payload: ChatPayload):
+    response = process_chat_message(payload.message)
+    status_code = 400 if response.get("error") else 200
+    return JSONResponse(content=response, status_code=status_code)
+
+
+@app.post("/api/transcribe", tags=["chatbot"])
+async def transcribe(audio: UploadFile = File(...)):
+    audio_bytes = await audio.read()
+    extension = Path(audio.filename or "audio.webm").suffix or ".webm"
+    transcript = transcribe_audio_bytes(audio_bytes, extension)
+    if not transcript:
+        return JSONResponse(content={"error": "Transcription failed."}, status_code=400)
+    return {"text": transcript}
 
 @app.on_event("startup")
 def startup():
