@@ -375,6 +375,84 @@ input[type=range].r-slider {
   background: rgba(0,0,0,0.15);
   flex-shrink: 0;
 }
+.route-side-panel {
+  border-top: 1px solid var(--border);
+  padding: 12px 14px;
+  max-height: 240px;
+  overflow-y: auto;
+  background: rgba(245,166,35,0.05);
+  flex-shrink: 0;
+}
+.route-side-panel::-webkit-scrollbar { width: 3px; }
+.route-side-panel::-webkit-scrollbar-thumb { background: var(--border); }
+.route-side-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.route-side-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: var(--accent);
+}
+.route-side-badge {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.route-side-meta {
+  font-size: 11px;
+  color: var(--muted-2);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+.route-step-list {
+  display: grid;
+  gap: 8px;
+}
+.route-step {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+.route-step-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.route-step-sub {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.route-side-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.route-mini-btn {
+  flex: 1;
+  padding: 7px 9px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  font-family: 'Cairo', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.route-mini-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
 .info-panel::-webkit-scrollbar { width: 3px; }
 .info-panel::-webkit-scrollbar-thumb { background: var(--border); }
 .info-empty { color: var(--muted); font-size: 12px; text-align: center; padding: 18px 0; line-height: 1.8; }
@@ -454,6 +532,50 @@ input[type=range].r-slider {
 }
 .leaflet-control-zoom a { background: var(--panel) !important; color: var(--text) !important; border-color: var(--border) !important; }
 .leaflet-tile { filter: brightness(0.8) saturate(0.55) hue-rotate(195deg); }
+.route-stop-label {
+  background: rgba(10,14,26,0.92) !important;
+  border: 1px solid rgba(245,166,35,0.28) !important;
+  border-radius: 8px !important;
+  color: var(--text) !important;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35) !important;
+  padding: 3px 7px !important;
+  font-family: 'Cairo', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  white-space: nowrap;
+}
+.route-stop-label:before {
+  display: none !important;
+}
+.chat-route-steps {
+  margin-top: 8px;
+  display: grid;
+  gap: 6px;
+}
+.chat-route-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 9px;
+  border: 1px solid rgba(245,166,35,0.18);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.chat-route-index {
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245,166,35,0.18);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
 .p-name { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
 .p-meta { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
 .p-dist { font-size: 11px; color: var(--teal); font-weight: 600; margin-bottom: 4px; }
@@ -772,6 +894,9 @@ input[type=range].r-slider {
         </div>
       </div>
       <div class="sb-list" id="sb-list"></div>
+      <div class="route-side-panel" id="route-side-panel">
+        <div class="info-empty">🗺 No active route yet.<br>Use chat or the route finder to pin one on the map.</div>
+      </div>
       <div class="info-panel" id="info-panel">
         <div class="info-empty">📍 Click <b style="color:var(--blue)">Use My Location</b><br>or pick a station<br><br>Recommendations are powered by<br>SVD + 3 hybrid signals</div>
       </div>
@@ -892,11 +1017,12 @@ let showMetro = true, showBus = false, showTransfers = false, showP = true, show
 let mMetro = [], mBus = [], mP = [], mR = [];
 let transferLines = [], routePolylines = [];
 let _places = [], _rests = [], _tab = 'p';
-let userMarker = null, userCircle = null, searchCircle = null;
+let userMarker = null, userCircle = null, searchCircle = null, pickedLocationMarker = null;
 let watchId = null, isTracking = false;
 let selected = null;
 let chatReady = false, chatTyping = false;
 let routeSelected = {from: null, to: null};
+let currentRoutePayload = null;
 
 // ════════════════════════════════════════════════════════════
 // SCREEN TRANSITIONS
@@ -1098,7 +1224,12 @@ async function initMap() {
   document.getElementById('sb-search').addEventListener('input', renderSbList);
   document.getElementById('r-slider-map').addEventListener('change', () => {
     if (isTracking && userMarker) { const ll = userMarker.getLatLng(); fetchRecs({lat:ll.lat,lon:ll.lng}); }
-    else if (selected) pickByData(selected);
+    else if (selected) refreshSelectedRecommendations();
+  });
+
+  map.on('click', (event) => {
+    const {lat, lng} = event.latlng;
+    pickMapLocation(lat, lng);
   });
 
   try {
@@ -1118,6 +1249,13 @@ async function initMap() {
   } catch(e) {
     setApiStatus(false, 'API Offline');
     document.getElementById('sb-list').innerHTML = '<div style="padding:14px;color:var(--red);font-size:12px">❌ Cannot reach localhost:8000</div>';
+  }
+}
+
+function clearPickedLocationMarker() {
+  if (pickedLocationMarker) {
+    map.removeLayer(pickedLocationMarker);
+    pickedLocationMarker = null;
   }
 }
 
@@ -1159,6 +1297,18 @@ function plotBus() {
 function renderSbList() {
   const q = document.getElementById('sb-search').value.toLowerCase();
   let html = '';
+  if (selected?.isMapPoint && (!q || 'pinned location custom map point'.includes(q))) {
+    html += `<div class="sb-item active" onclick="pickMapLocation(${selected.lat},${selected.lon})">
+      <div class="sb-ico" style="color:var(--blue)">📍</div>
+      <div><div class="sb-name">${selected.name || 'Pinned location'}</div><div class="sb-sub">Custom map point</div></div>
+    </div>`;
+  }
+  if (selected?.isRouteStop && (!q || 'route stop transit'.includes(q) || String(selected.name || '').toLowerCase().includes(q))) {
+    html += `<div class="sb-item active" onclick="refreshSelectedRecommendations()">
+      <div class="sb-ico" style="color:var(--accent)">🛑</div>
+      <div><div class="sb-name">${selected.name || 'Route stop'}</div><div class="sb-sub">Route stop</div></div>
+    </div>`;
+  }
   stations.filter(s => s.name.toLowerCase().includes(q)).forEach(s => {
     html += `<div class="sb-item ${selected?.station_id === s.station_id ? 'active' : ''}" onclick="pickById(${s.station_id})">
       <div class="sb-ico">Ⓜ</div>
@@ -1180,6 +1330,7 @@ function esc(s) { return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").rep
 function pickById(id) { const s = stations.find(x => x.station_id === id); if (s) pickByData(s); }
 function pickByBus(stopId, name, lat, lon) {
   if (isTracking) stopGPS();
+  clearPickedLocationMarker();
   selected = {stop_id: stopId, name, lat, lon, isBusStop: true};
   renderSbList();
   map.setView([lat,lon], 15, {animate:true});
@@ -1188,9 +1339,65 @@ function pickByBus(stopId, name, lat, lon) {
 function pickByData(s) {
   if (!s.lat || !s.lon) return;
   if (isTracking) stopGPS();
+  clearPickedLocationMarker();
   selected = s; renderSbList();
   map.setView([s.lat, s.lon], 15, {animate:true});
   fetchRecs({station: s.name, origin: [s.lat, s.lon], label: s.name});
+}
+
+function pickMapLocation(lat, lon) {
+  if (isTracking) stopGPS();
+  selected = {
+    lat,
+    lon,
+    name: `Pinned location`,
+    isMapPoint: true
+  };
+  renderSbList();
+  clearPickedLocationMarker();
+  pickedLocationMarker = L.marker([lat, lon], {icon: userIcon}).addTo(map).bindPopup(
+    `<div class="p-name">Pinned Location</div><div class="p-meta">${lat.toFixed(5)}, ${lon.toFixed(5)}</div>`
+  );
+  pickedLocationMarker.openPopup();
+  map.setView([lat, lon], Math.max(map.getZoom(), 15), {animate:true});
+  fetchRecs({
+    lat,
+    lon,
+    origin: [lat, lon],
+    label: `Pinned location`
+  });
+}
+
+function refreshSelectedRecommendations() {
+  if (!selected) return;
+  if (selected.isMapPoint) {
+    fetchRecs({
+      lat: selected.lat,
+      lon: selected.lon,
+      origin: [selected.lat, selected.lon],
+      label: selected.name || 'Pinned location'
+    });
+    return;
+  }
+  if (selected.isRouteStop) {
+    fetchRecs({
+      lat: selected.lat,
+      lon: selected.lon,
+      origin: [selected.lat, selected.lon],
+      label: selected.name || 'Route stop'
+    });
+    return;
+  }
+  if (selected.isBusStop) {
+    fetchRecs({
+      lat: selected.lat,
+      lon: selected.lon,
+      origin: [selected.lat, selected.lon],
+      label: selected.name
+    });
+    return;
+  }
+  pickByData(selected);
 }
 
 // GPS
@@ -1287,7 +1494,7 @@ function drawTransfers() {
 async function fetchRecs({lat, lon, station, origin, label}) {
   const uid = currentUser.user_id;
   const radius = parseInt(document.getElementById('r-slider-map').value);
-  clearResults(); clearRouteViz();
+  clearResults();
   const center = origin || [lat, lon];
   if (searchCircle) map.removeLayer(searchCircle);
   searchCircle = L.circle(center, {radius, color: station ? '#f5a623' : '#38bdf8', fillOpacity:.04, weight:1, dashArray:'5 4'}).addTo(map);
@@ -1406,6 +1613,64 @@ function clearRouteViz() {
   routePolylines.forEach(l => map.removeLayer(l)); routePolylines=[];
 }
 
+function formatRouteStep(leg, index) {
+  const modeLabel = leg.mode === 'WALK'
+    ? 'Walk'
+    : `${leg.route_short || 'Transit'}${leg.agency ? ` · ${leg.agency}` : ''}`;
+  const pathLabel = [leg.from_stop, leg.to_stop].filter(Boolean).join(' → ');
+  return `
+    <div class="route-step">
+      <div class="route-step-label">${index + 1}. ${modeLabel}</div>
+      <div class="route-step-sub">${pathLabel || 'Route segment'}</div>
+    </div>`;
+}
+
+function renderRouteSidePanel(routePayload) {
+  const panel = document.getElementById('route-side-panel');
+  const legs = routePayload?.legs || routePayload?.route || [];
+  if (!legs.length) {
+    panel.innerHTML = '<div class="info-empty">🗺 No active route yet.<br>Use chat or the route finder to pin one on the map.</div>';
+    return;
+  }
+
+  const start = routePayload.start_name || legs[0]?.from_stop || 'Start';
+  const end = routePayload.destination_name || legs[legs.length - 1]?.to_stop || 'Destination';
+  const steps = Array.isArray(routePayload.formatted_legs) && routePayload.formatted_legs.length
+    ? routePayload.formatted_legs.map((step, index) => `
+        <div class="route-step">
+          <div class="route-step-label">${index + 1}. Step</div>
+          <div class="route-step-sub">${step}</div>
+        </div>
+      `).join('')
+    : legs.map((leg, index) => formatRouteStep(leg, index)).join('');
+
+  panel.innerHTML = `
+    <div class="route-side-head">
+      <div class="route-side-title">Active Route</div>
+      <div class="route-side-badge">${legs.length} legs</div>
+    </div>
+    <div class="route-side-meta">
+      <strong>${start}</strong> → <strong>${end}</strong>
+    </div>
+    <div class="route-step-list">${steps}</div>
+    <div class="route-side-actions">
+      <button class="route-mini-btn" onclick="focusCurrentRoute()">Focus Route</button>
+      <button class="route-mini-btn" onclick="clearActiveRoute()">Clear Route</button>
+    </div>`;
+}
+
+function focusCurrentRoute() {
+  const legs = currentRoutePayload?.legs || currentRoutePayload?.route || [];
+  if (legs.length) visualizeRoute(legs, {refit: true, preservePanel: true});
+}
+
+function clearActiveRoute() {
+  currentRoutePayload = null;
+  clearRouteViz();
+  renderRouteSidePanel(null);
+  setCPill('c-route','🗺 No route yet','');
+}
+
 // ════════════════════════════════════════════════════════════
 // ROUTE
 // ════════════════════════════════════════════════════════════
@@ -1469,9 +1734,20 @@ async function searchRoute() {
     const res = await fetch(`${API}/api/route?start=${encodeURIComponent(routeSelected.from)}&end=${encodeURIComponent(routeSelected.to)}&time=${encodeURIComponent(t)}`);
     const data = await res.json();
     if (!res.ok) throw new Error(data.detail || 'Route not found');
-    renderRoute(data.route || []);
+    currentRoutePayload = {
+      legs: data.route || [],
+      route: data.route || [],
+      summary: data.summary || {},
+      start_name: data.start_name || routeSelected.from,
+      destination_name: data.destination_name || routeSelected.to,
+      departure_time: data.departure_time || t,
+      route_options: data.route_options || []
+    };
+    renderRoute(currentRoutePayload.legs || []);
+    renderRouteSidePanel(currentRoutePayload);
     setRoutMsg('✅ Route found!','ok');
-    visualizeRoute(data.route||[]);
+    visualizeRoute(currentRoutePayload.legs || []);
+    setCPill('c-route','🗺 <strong>Route found</strong>','route');
   } catch(e) {
     setRoutMsg('❌ ' + e.message, 'err');
   }
@@ -1483,12 +1759,46 @@ function setRoutMsg(msg, cls) {
   el.className = 'status-msg' + (cls ? ' '+cls : '');
 }
 
+const ROUTE_TRANSIT_PALETTE = [
+  '#ff5f56',
+  '#38bdf8',
+  '#22c55e',
+  '#f59e0b',
+  '#a855f7',
+  '#ef4444',
+  '#14b8a6',
+  '#f97316'
+];
+
+function hashRouteKey(value) {
+  const text = String(value || 'route');
+  let hash = 0;
+  for (let i = 0; i < text.length; i += 1) {
+    hash = ((hash << 5) - hash) + text.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+}
+
 function getRouteColor(leg) {
   if (!leg || leg.mode==='WALK') return '#e2e8f0';
-  if (!leg.agency) return '#22c55e';
-  if (leg.agency==='Metro'||String(leg.agency).includes('Metro'))
-    return leg.route_short?.includes('L1') ? '#ff5f56' : '#38bdf8';
-  return AGENCY_COLORS[leg.agency] || '#2ecc71';
+  if (leg.agency==='Metro'||String(leg.agency).includes('Metro')) {
+    if (leg.route_short?.includes('L1')) return '#ff5f56';
+    if (leg.route_short?.includes('L2')) return '#38bdf8';
+    return '#8b5cf6';
+  }
+  if (leg.agency && AGENCY_COLORS[leg.agency]) return AGENCY_COLORS[leg.agency];
+  const key = leg.route_short || leg.route_long || leg.trip_id || leg.shape_id || leg.agency || 'transit';
+  return ROUTE_TRANSIT_PALETTE[hashRouteKey(key) % ROUTE_TRANSIT_PALETTE.length];
+}
+
+function bindVisibleStopLabel(layer, text, color, direction = 'top', permanent = false) {
+  return layer.bindTooltip(text || 'Stop', {
+    permanent,
+    direction,
+    offset: direction === 'top' ? [0, -10] : [10, 0],
+    className: 'route-stop-label'
+  });
 }
 
 function renderRoute(legs) {
@@ -1513,7 +1823,7 @@ function getLegCoords(leg) {
   return [];
 }
 
-function visualizeRoute(legs) {
+function visualizeRoute(legs, options = {}) {
   clearRouteViz();
   const allCoords = [];
   legs.forEach(leg => {
@@ -1526,11 +1836,70 @@ function visualizeRoute(legs) {
       L.polyline(coords,{color:'white',weight:5,opacity:0.9,lineCap:'round',lineJoin:'round',dashArray:isDash?'8,6':null}),
       L.polyline(coords,{color,weight:3,opacity:0.98,lineCap:'round',lineJoin:'round',dashArray:isDash?'8,6':null})
     ].forEach(l => { l.addTo(map); routePolylines.push(l); });
+
+    if (leg.mode !== 'WALK' && Array.isArray(leg.stop_points)) {
+      leg.stop_points.forEach(point => {
+        if (!isFinite(point?.lat) || !isFinite(point?.lon)) return;
+        const marker = L.circleMarker([+point.lat, +point.lon], {
+          radius: 5,
+          color,
+          fillColor: color,
+          fillOpacity: 0.95,
+          weight: 2
+        }).addTo(map);
+        bindVisibleStopLabel(marker, point.name || point.stop_id || 'Stop', color, 'top', false);
+        marker.bindPopup(`<div class="p-name">${point.name || 'Stop'}</div><div class="p-meta">${leg.route_short || leg.agency || 'Transit stop'}</div>`);
+        marker.on('click', () => {
+          selected = {
+            lat: +point.lat,
+            lon: +point.lon,
+            name: point.name || point.stop_id || 'Route stop',
+            isRouteStop: true
+          };
+          renderSbList();
+          fetchRecs({
+            lat: +point.lat,
+            lon: +point.lon,
+            origin: [+point.lat, +point.lon],
+            label: point.name || point.stop_id || 'Route stop'
+          });
+        });
+        routePolylines.push(marker);
+      });
+    }
+
     allCoords.push(...coords);
   });
   if (allCoords.length) {
-    closeRouteModal();
-    map.fitBounds(L.latLngBounds(allCoords), {padding:[60,60],maxZoom:15});
+    const start = allCoords[0];
+    const end = allCoords[allCoords.length - 1];
+    const startName = currentRoutePayload?.start_name || legs[0]?.from_stop || 'Start';
+    const endName = currentRoutePayload?.destination_name || legs[legs.length - 1]?.to_stop || 'Destination';
+
+    const startMarker = L.circleMarker(start, {
+      radius: 8,
+      color: '#16a34a',
+      fillColor: '#22c55e',
+      fillOpacity: 1,
+      weight: 3
+    }).addTo(map).bindPopup(`<div class="p-name">🟢 Start</div><div class="p-meta">${startName}</div>`);
+    bindVisibleStopLabel(startMarker, startName, '#22c55e', 'right', false);
+
+    const endMarker = L.circleMarker(end, {
+      radius: 8,
+      color: '#dc2626',
+      fillColor: '#ef4444',
+      fillOpacity: 1,
+      weight: 3
+    }).addTo(map).bindPopup(`<div class="p-name">🔴 Destination</div><div class="p-meta">${endName}</div>`);
+    bindVisibleStopLabel(endMarker, endName, '#ef4444', 'right', false);
+
+    routePolylines.push(startMarker, endMarker);
+
+    if (!options.preservePanel) closeRouteModal();
+    if (options.refit !== false) {
+      map.fitBounds(L.latLngBounds(allCoords), {padding:[60,60],maxZoom:15});
+    }
   }
 }
 
@@ -1557,12 +1926,21 @@ function appendChatMsg(text, role, opts={}) {
   if (q) q.remove();
   const area = document.getElementById('chat-msgs');
   const now = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  const routeDetails = Array.isArray(opts.routeDetails) && opts.routeDetails.length
+    ? `<div class="chat-route-steps">${opts.routeDetails.map((step, index) => `
+        <div class="chat-route-step">
+          <span class="chat-route-index">${index + 1}</span>
+          <span>${step}</span>
+        </div>
+      `).join('')}</div>`
+    : '';
   const row = document.createElement('div');
   row.className = 'msg-row ' + role;
   row.innerHTML = `
     <div class="msg-avatar">${role==='user'?'You':'AI'}</div>
     <div class="msg-bubble-wrap">
       <div class="msg-bubble">${text}</div>
+      ${routeDetails}
       ${opts.routeFlag ? `<div class="route-flag">🗺 Route sent to map</div>` : ''}
       <div class="msg-time">${now}</div>
     </div>`;
@@ -1620,9 +1998,11 @@ async function sendChatMsg(prefill) {
     hideTyping();
     updateSessionId(data.session_id);
     const hasRoute = !!data.route;
-    appendChatMsg(data.reply||'…', 'bot', {routeFlag: hasRoute});
+    const routeSteps = data.route?.formatted_legs || [];
+    appendChatMsg(data.reply||'…', 'bot', {routeFlag: hasRoute, routeDetails: routeSteps});
     if (hasRoute) {
-      const legs = data.route.legs || data.route.route || [];
+      currentRoutePayload = data.route;
+      const legs = currentRoutePayload.legs || currentRoutePayload.route || [];
       visualizeRoute(legs);
       setCPill('c-route','🗺 <strong>Route found</strong>','route');
     }

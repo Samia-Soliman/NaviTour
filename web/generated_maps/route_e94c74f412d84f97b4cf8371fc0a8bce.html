@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_b9dc2745e2dea5a86949c92e10fb5dfe {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_b9dc2745e2dea5a86949c92e10fb5dfe" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_b9dc2745e2dea5a86949c92e10fb5dfe = L.map(
+                "map_b9dc2745e2dea5a86949c92e10fb5dfe",
+                {
+                    center: [30.0444, 31.2357],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_39b1e1834a8a1c75ab09450d4a711618 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_39b1e1834a8a1c75ab09450d4a711618.addTo(map_b9dc2745e2dea5a86949c92e10fb5dfe);
+        
+    
+            var poly_line_3d3a8aeee6e6eb89b7c5e6833c1e28cd = L.polyline(
+                [[30.060504, 31.246092], [30.061206, 31.246949], [30.061422, 31.2473], [30.061832, 31.248088], [30.062243, 31.248993], [30.063245, 31.251532], [30.063436, 31.252059], [30.065794, 31.258143], [30.066511, 31.259941], [30.067005, 31.261308], [30.068222, 31.264343], [30.068279, 31.26456], [30.068293, 31.264669], [30.068278, 31.26504], [30.068396, 31.265428], [30.068497, 31.265567], [30.06915, 31.267589], [30.070629, 31.27251], [30.070888, 31.273337], [30.071354, 31.27471], [30.071421, 31.275092], [30.071486, 31.275804], [30.071582, 31.276452], [30.071751, 31.277273], [30.071939, 31.277946], [30.072143, 31.278467], [30.072308, 31.278834], [30.072662, 31.279411], [30.072923, 31.279759], [30.073623, 31.280427], [30.074348, 31.281318], [30.07442, 31.281432], [30.074731, 31.281825], [30.074802, 31.281984], [30.07485, 31.282154], [30.074873, 31.282332], [30.07487, 31.282511], [30.07484, 31.282686], [30.074802, 31.282803], [30.074713, 31.28297], [30.074543, 31.283245], [30.073605, 31.284437], [30.072799, 31.285633]],
+                {"bubblingMouseEvents": true, "color": "#17becf", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#17becf", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 2, "stroke": true, "weight": 6}
+            ).addTo(map_b9dc2745e2dea5a86949c92e10fb5dfe);
+        
+    
+            poly_line_3d3a8aeee6e6eb89b7c5e6833c1e28cd.bindTooltip(
+                `<div>
+                     مينى باص 120 - ابو وافية - زهراء مدينة نصر
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_95d111ad8e0f47923111893edc114a0c = L.circleMarker(
+                [30.060660176565182, 31.246266924895693],
+                {"bubblingMouseEvents": true, "color": "#17becf", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#17becf", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_b9dc2745e2dea5a86949c92e10fb5dfe);
+        
+    
+            circle_marker_95d111ad8e0f47923111893edc114a0c.bindTooltip(
+                `<div>
+                     رمسيس
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a250e50eac45c9a58801210179e51684 = L.circleMarker(
+                [30.061871297064958, 31.24813982808145],
+                {"bubblingMouseEvents": true, "color": "#17becf", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#17becf", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_b9dc2745e2dea5a86949c92e10fb5dfe);
+        
+    
+            circle_marker_a250e50eac45c9a58801210179e51684.bindTooltip(
+                `<div>
+                     محطة سكة حديد رمسيس
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6d9d0de5a57fb687cae64f3867877671 = L.circleMarker(
+                [30.06344867823565, 31.2520917042217],
+                {"bubblingMouseEvents": true, "color": "#17becf", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#17becf", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_b9dc2745e2dea5a86949c92e10fb5dfe);
+        
+    
+            circle_marker_6d9d0de5a57fb687cae64f3867877671.bindTooltip(
+                `<div>
+                     المستشفى القبطي
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bc9cfb0d58edad0e6815866cfccb3f59 = L.circleMarker(
+                [30.06655420642484, 31.26006056109879],
+                {"bubblingMouseEvents": true, "color": "#17becf", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#17becf", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_b9dc2745e2dea5a86949c92e10fb5dfe);
+        
+    
+            circle_marker_bc9cfb0d58edad0e6815866cfccb3f59.bindTooltip(
+                `<div>
+                     المهندس للتأمين (رمسيس)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4f2209df9ef6d4bae7ad51fc389d1622 = L.circleMarker(
+                [30.068110735051206, 31.26406616221075],
+                {"bubblingMouseEvents": true, "color": "#17becf", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#17becf", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_b9dc2745e2dea5a86949c92e10fb5dfe);
+        
+    
+            circle_marker_4f2209df9ef6d4bae7ad51fc389d1622.bindTooltip(
+                `<div>
+                     غمرة
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c3a1557bddf220716b3a50cc6fecbad1 = L.circleMarker(
+                [30.07075061392535, 31.272880756680543],
+                {"bubblingMouseEvents": true, "color": "#17becf", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#17becf", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_b9dc2745e2dea5a86949c92e10fb5dfe);
+        
+    
+            circle_marker_c3a1557bddf220716b3a50cc6fecbad1.bindTooltip(
+                `<div>
+                     مدخل جسر أحمد سعيد
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_772033c9ddd601aa8812512552499d60 = L.circleMarker(
+                [30.0715893, 31.2764709],
+                {"bubblingMouseEvents": true, "color": "#17becf", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#17becf", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_b9dc2745e2dea5a86949c92e10fb5dfe);
+        
+    
+            circle_marker_772033c9ddd601aa8812512552499d60.bindTooltip(
+                `<div>
+                     مستشفى الدمرداش
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bba149931df5ccf235f9a55df8ef7934 = L.circleMarker(
+                [30.0748729, 31.2823316],
+                {"bubblingMouseEvents": true, "color": "#17becf", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#17becf", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_b9dc2745e2dea5a86949c92e10fb5dfe);
+        
+    
+            circle_marker_bba149931df5ccf235f9a55df8ef7934.bindTooltip(
+                `<div>
+                     مسجد النور (العباسية)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c93378070ec7355404ad31d8050ee3c2 = L.circleMarker(
+                [30.0731808, 31.2850706],
+                {"bubblingMouseEvents": true, "color": "#17becf", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#17becf", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_b9dc2745e2dea5a86949c92e10fb5dfe);
+        
+    
+            circle_marker_c93378070ec7355404ad31d8050ee3c2.bindTooltip(
+                `<div>
+                     العباسية
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_6cc204805aeb3a3d63b5947eda3e32f1 = L.polyline(
+                [[30.0731808, 31.2850706], [30.072712730517758, 31.28563458724541]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": "5,5", "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 2, "stroke": true, "weight": 6}
+            ).addTo(map_b9dc2745e2dea5a86949c92e10fb5dfe);
+        
+    
+            poly_line_6cc204805aeb3a3d63b5947eda3e32f1.bindTooltip(
+                `<div>
+                     WALK
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_3d9a19b1afad1a340c13636a43f1624a = L.marker(
+                [30.060660176565182, 31.246266924895693],
+                {
+}
+            ).addTo(map_b9dc2745e2dea5a86949c92e10fb5dfe);
+        
+    
+            var icon_0c4a16f480671419db8d3a27ef522aab = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_3d9a19b1afad1a340c13636a43f1624a.bindTooltip(
+                `<div>
+                     Start: رمسيس
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3d9a19b1afad1a340c13636a43f1624a.setIcon(icon_0c4a16f480671419db8d3a27ef522aab);
+            
+    
+            var marker_8965464e8c586b61469cdd482a260331 = L.marker(
+                [30.072712730517758, 31.28563458724541],
+                {
+}
+            ).addTo(map_b9dc2745e2dea5a86949c92e10fb5dfe);
+        
+    
+            var icon_99009f33c40a5dfb034fa6b5f6b64ae9 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_8965464e8c586b61469cdd482a260331.bindTooltip(
+                `<div>
+                     End: العباسية
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8965464e8c586b61469cdd482a260331.setIcon(icon_99009f33c40a5dfb034fa6b5f6b64ae9);
+            
+</script>
+</html>

@@ -82,6 +82,7 @@ sys.path.insert(0, str(NAVITOUR_PATH))
 try:
     from cairo_assistant.chatbot_service import (
         MAPS_DIR,
+        build_map,
         process_chat_message,
         transcribe_audio_bytes,
     )
@@ -90,6 +91,8 @@ except ImportError:
     MAPS_DIR = BASE_DIR / "maps"
     MAPS_DIR.mkdir(exist_ok=True)
     _CHATBOT_AVAILABLE = False
+    def build_map(legs):
+        return None
     def process_chat_message(msg):
         return {"assistant_message": "Chatbot service not available.", "error": False}
     def transcribe_audio_bytes(data, ext):
@@ -271,6 +274,49 @@ def _serialize_leg(leg: dict) -> dict:
     }
 
 
+def _serialize_route_option(option: dict, option_index: int = 0, recommended: bool = False) -> dict:
+    raw_route = option.get("route")
+    if raw_route is None:
+        raw_route = option.get("legs") or []
+
+    return {
+        "option_index": option_index,
+        "recommended": bool(recommended),
+        "summary": option.get("summary", {}),
+        "route": [_serialize_leg(leg) for leg in raw_route],
+    }
+
+
+def _build_serialized_route_payload(
+    raw_legs,
+    *,
+    summary=None,
+    start_name=None,
+    destination_name=None,
+    departure_time=None,
+    route_options=None,
+):
+    serialized_options = []
+    for index, option in enumerate(route_options or []):
+        serialized_options.append(
+            _serialize_route_option(
+                option,
+                option_index=index,
+                recommended=(index == 0),
+            )
+        )
+
+    return {
+        "legs": [_serialize_leg(leg) for leg in (raw_legs or [])],
+        "summary": summary or {},
+        "start_name": start_name,
+        "destination_name": destination_name,
+        "departure_time": departure_time or (summary or {}).get("departure_time"),
+        "route_options": serialized_options,
+        "selected_option_index": 0 if serialized_options else None,
+    }
+
+
 # ═══════════════════════════════════════════════════════════
 # PYDANTIC MODELS
 # ═══════════════════════════════════════════════════════════
@@ -332,7 +378,7 @@ _TEMPLATE_DIR  = PROJECT_ROOT / "web" / "templates"
 if _STATIC_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(_STATIC_DIR)), name="static")
 if MAPS_DIR.exists():
-    app.mount("/map.html", StaticFiles(directory=str(MAPS_DIR)), name="maps")
+    app.mount("/maps", StaticFiles(directory=str(MAPS_DIR)), name="maps")
 
 templates = Jinja2Templates(directory=str(_TEMPLATE_DIR)) if _TEMPLATE_DIR.exists() else None
 
@@ -461,7 +507,17 @@ async def legacy_message(payload: MessagePayload):
     )
     route_payload = None
     if reply_data.get("route"):
-        route_payload = reply_data["route"]
+        raw_route = reply_data["route"] or {}
+        raw_legs = raw_route.get("legs") or raw_route.get("route") or []
+        extractor_output = reply_data.get("extractor_output") or {}
+        route_payload = _build_serialized_route_payload(
+            raw_legs,
+            summary={"legs_count": len(raw_legs)},
+            start_name=extractor_output.get("start_point"),
+            destination_name=extractor_output.get("end_point"),
+        )
+        route_payload["formatted_legs"] = raw_route.get("formatted_legs") or []
+        route_payload["map_url"] = reply_data.get("map_url")
 
     live_location = get_live_location_payload(sid, allow_fallback=False)
     return {
@@ -711,13 +767,43 @@ def get_route(start: str, end: str, time: Optional[str] = None):
         if isinstance(result, str):
             raise HTTPException(400, result)
         if isinstance(result, list):
-            return {"route": [_serialize_leg(l) for l in result],
-                    "summary": {"legs_count": len(result)},
-                    "departure_time": departure}
+            route_payload = _build_serialized_route_payload(
+                result,
+                summary={"legs_count": len(result)},
+                start_name=start,
+                destination_name=end,
+                departure_time=departure,
+            )
+            return {
+                "route": route_payload["legs"],
+                "summary": route_payload["summary"],
+                "departure_time": route_payload["departure_time"],
+                "start_name": route_payload["start_name"],
+                "destination_name": route_payload["destination_name"],
+                "route_options": route_payload["route_options"],
+                "selected_option_index": route_payload["selected_option_index"],
+                "map_url": build_map(result),
+            }
         if isinstance(result, dict):
-            return {"route": [_serialize_leg(l) for l in (result.get("legs") or [])],
-                    "summary": result.get("summary", {}),
-                    "departure_time": departure}
+            raw_legs = result.get("legs") or []
+            route_payload = _build_serialized_route_payload(
+                raw_legs,
+                summary=result.get("summary", {}),
+                start_name=start,
+                destination_name=end,
+                departure_time=departure,
+                route_options=result.get("route_options") or [],
+            )
+            return {
+                "route": route_payload["legs"],
+                "summary": route_payload["summary"],
+                "departure_time": route_payload["departure_time"],
+                "start_name": route_payload["start_name"],
+                "destination_name": route_payload["destination_name"],
+                "route_options": route_payload["route_options"],
+                "selected_option_index": route_payload["selected_option_index"],
+                "map_url": build_map(raw_legs) if raw_legs else None,
+            }
         raise HTTPException(500, f"Unexpected RAPTOR output: {type(result)}")
     except HTTPException:
         raise

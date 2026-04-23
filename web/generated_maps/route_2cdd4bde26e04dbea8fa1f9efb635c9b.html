@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_6f33c99f1fcd3f4d6dfcde9f0cd21daa {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_6f33c99f1fcd3f4d6dfcde9f0cd21daa" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_6f33c99f1fcd3f4d6dfcde9f0cd21daa = L.map(
+                "map_6f33c99f1fcd3f4d6dfcde9f0cd21daa",
+                {
+                    center: [30.0444, 31.2357],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_a8f2c3d70eed9c3906a7b82d5fe8fc8f = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_a8f2c3d70eed9c3906a7b82d5fe8fc8f.addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            var poly_line_bfd0217f9637b6a0742f85051f2c8b91 = L.polyline(
+                [[29.89296, 31.29859], [29.89294, 31.2986], [29.89294, 31.2986], [29.89294, 31.29867], [29.89294, 31.29868], [29.89294, 31.29868], [29.89294, 31.29868], [29.89295, 31.2989], [29.89295, 31.29896], [29.89295, 31.2991], [29.89295, 31.2991], [29.89183, 31.2992], [29.89178, 31.29921], [29.89175, 31.29923], [29.89175, 31.29923], [29.89173, 31.29926], [29.89172, 31.29931], [29.89172, 31.29964], [29.89173, 31.30071], [29.89174, 31.30136], [29.89175, 31.30188], [29.89175, 31.30232], [29.89176, 31.30289], [29.89178, 31.30354], [29.8918, 31.30417], [29.89184, 31.30525], [29.89184, 31.30525], [29.89138, 31.30527], [29.8902, 31.30511], [29.88986, 31.30507], [29.88947, 31.30501], [29.88915, 31.30497], [29.88889, 31.30494], [29.8885, 31.30488], [29.88813, 31.30483], [29.88766, 31.30477], [29.88721, 31.30471], [29.88681, 31.30465], [29.88643, 31.3046], [29.88643, 31.3046], [29.88656, 31.30358], [29.88656, 31.30358], [29.88656, 31.30358], [29.88635, 31.30355], [29.88635, 31.30355], [29.88607, 31.30351], [29.88572, 31.30347], [29.88453, 31.3033], [29.88331, 31.30313], [29.88207, 31.30295], [29.88079, 31.30277], [29.87897, 31.30252], [29.87885, 31.30252], [29.87873, 31.30255], [29.87862, 31.3026], [29.87851, 31.30267], [29.87848, 31.30271], [29.87834, 31.30285], [29.87826, 31.30292], [29.87818, 31.30297], [29.87806, 31.30303], [29.87768, 31.30323], [29.87768, 31.30323], [29.87768, 31.30323], [29.87761, 31.30326], [29.87738, 31.30334], [29.87645, 31.3036], [29.87553, 31.30385], [29.87487, 31.30402], [29.87476, 31.30406], [29.87403, 31.30425], [29.87258, 31.30463], [29.87201, 31.3048], [29.87195, 31.30482], [29.87189, 31.30485], [29.87106, 31.30518], [29.871, 31.3052], [29.87093, 31.30522], [29.86993, 31.30539], [29.86986, 31.3054], [29.86986, 31.3054], [29.86994, 31.30564], [29.87002, 31.30584], [29.87011, 31.30605], [29.87028, 31.30641], [29.87047, 31.30681], [29.87115, 31.30817], [29.87162, 31.30913], [29.87249, 31.3109], [29.87267, 31.31125], [29.87267, 31.31125], [29.87267, 31.31125], [29.87377, 31.31339], [29.87411, 31.31404], [29.8742, 31.31423], [29.87429, 31.31442], [29.87444, 31.31483], [29.87455, 31.31508], [29.87472, 31.31545], [29.87478, 31.31559], [29.87481, 31.31566], [29.87484, 31.31573], [29.87488, 31.31583], [29.87491, 31.31591], [29.87494, 31.31596], [29.87518, 31.3164], [29.87528, 31.31659], [29.87528, 31.31659], [29.87526, 31.31664], [29.87523, 31.3167], [29.87519, 31.31675], [29.87515, 31.3168], [29.87509, 31.31687], [29.87502, 31.31693], [29.87495, 31.31699], [29.87488, 31.31704], [29.87481, 31.31709], [29.87474, 31.31714], [29.87467, 31.31719], [29.8746, 31.31723], [29.87453, 31.31727], [29.87446, 31.3173], [29.87446, 31.3173], [29.87442, 31.31732], [29.87437, 31.31733], [29.87437, 31.31733], [29.87393, 31.3175], [29.87355, 31.31766], [29.87355, 31.31766], [29.87355, 31.31766], [29.87345, 31.3177], [29.87335, 31.31776], [29.87324, 31.31782], [29.87314, 31.31788], [29.87137, 31.31914], [29.8696, 31.3204], [29.86812, 31.32147], [29.86521, 31.32351], [29.86452, 31.324], [29.86377, 31.32453], [29.86295, 31.32514], [29.86295, 31.32514], [29.86295, 31.32514], [29.86274, 31.32528], [29.86266, 31.32533]],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#ff7f0e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 2, "stroke": true, "weight": 6}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            poly_line_bfd0217f9637b6a0742f85051f2c8b91.bindTooltip(
+                `<div>
+                     ميكروباص - حدائق حلوان - مترو حلوان
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4ad61cadbae423d1447525efe93b2636 = L.circleMarker(
+                [29.89295449999998, 31.2985739],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_4ad61cadbae423d1447525efe93b2636.bindTooltip(
+                `<div>
+                     حدائق حلوان
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d5d98e982c68f56540de0286f82434fc = L.circleMarker(
+                [29.88638179858689, 31.30355756625661],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_d5d98e982c68f56540de0286f82434fc.bindTooltip(
+                `<div>
+                     مدرسة الصفا (وادي حوف)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e72cf803f86114e0c59a4f27f2188850 = L.circleMarker(
+                [29.86986, 31.3054],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_e72cf803f86114e0c59a4f27f2188850.bindTooltip(
+                `<div>
+                     محطة بنزين الوطنية (شركة النصر)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e79d170d7cdd797913e483fab382f96e = L.circleMarker(
+                [29.86249712019352, 31.3254202533462],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_e79d170d7cdd797913e483fab382f96e.bindTooltip(
+                `<div>
+                     مترو عين حلوان
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_6bd472f9a96f1921a472fd9cb4f95f03 = L.polyline(
+                [[29.86249712019352, 31.3254202533462], [29.863678725586865, 31.32339908652328]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": "5,5", "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 2, "stroke": true, "weight": 6}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            poly_line_6bd472f9a96f1921a472fd9cb4f95f03.bindTooltip(
+                `<div>
+                     WALK
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5f10abd5d46532997246f74122db78ca = L.polyline(
+                [[29.86368, 31.3234], [29.86385, 31.32319], [29.86391, 31.32305], [29.86394, 31.32298], [29.86396, 31.3229], [29.86398, 31.32285], [29.86409, 31.32251], [29.86413, 31.32239], [29.86422, 31.32215], [29.86428, 31.32203], [29.86435, 31.32194], [29.86449, 31.32184], [29.86455, 31.32173], [29.8647, 31.3217], [29.86484, 31.32169], [29.86499, 31.32169], [29.86585, 31.32172], [29.86604, 31.3217], [29.86624, 31.32167], [29.86644, 31.32163], [29.86663, 31.32158], [29.86682, 31.32152], [29.86701, 31.32144], [29.86722, 31.32135], [29.86732, 31.32131], [29.86742, 31.32125], [29.86751, 31.3212], [29.86761, 31.32113], [29.86891, 31.32019], [29.86905, 31.32008], [29.86929, 31.31991], [29.87063, 31.319], [29.87069, 31.31899], [29.87075, 31.31897], [29.8708, 31.31895], [29.87331, 31.31717], [29.87347, 31.31706], [29.87355, 31.317], [29.87363, 31.31693], [29.87371, 31.31686], [29.87379, 31.31679], [29.87387, 31.31671], [29.87403, 31.31653], [29.87412, 31.31644], [29.8742, 31.31635], [29.87432, 31.31625], [29.87444, 31.31615], [29.87457, 31.31604], [29.87467, 31.31596], [29.8747, 31.31594], [29.87474, 31.31592], [29.87477, 31.3159], [29.87481, 31.31588], [29.87485, 31.31585], [29.87488, 31.31583], [29.87488, 31.31583], [29.87491, 31.31591], [29.87494, 31.31596], [29.87518, 31.3164], [29.87528, 31.31659], [29.87544, 31.31685], [29.87544, 31.31685], [29.87549, 31.31684], [29.87553, 31.31682], [29.87558, 31.31679], [29.87561, 31.31676], [29.87589, 31.31644], [29.87615, 31.31618], [29.87624, 31.31609], [29.87633, 31.31601], [29.87643, 31.31593], [29.87653, 31.31586], [29.87697, 31.31559], [29.87756, 31.31519], [29.87768, 31.31511], [29.87869, 31.31451], [29.87952, 31.31404], [29.88025, 31.31363], [29.88177, 31.31276], [29.88195, 31.31266], [29.88213, 31.31256], [29.88245, 31.31238], [29.88334, 31.31189], [29.88484, 31.31109], [29.88532, 31.31085], [29.88547, 31.31079], [29.88562, 31.31073], [29.88578, 31.31069], [29.88587, 31.31069], [29.88587, 31.31069], [29.88587, 31.31069], [29.88594, 31.31068], [29.88607, 31.31068], [29.88627, 31.3107], [29.88664, 31.31074], [29.88714, 31.3108], [29.88728, 31.31083], [29.88741, 31.31088], [29.88754, 31.31095], [29.88766, 31.31103], [29.88888, 31.31201], [29.89018, 31.3131], [29.89171, 31.31434], [29.89194, 31.31452], [29.89217, 31.31469], [29.89239, 31.31483], [29.89262, 31.31496], [29.89293, 31.31509], [29.89309, 31.31519], [29.89331, 31.31536], [29.89455, 31.3164], [29.89468, 31.31651], [29.8948, 31.31664], [29.8949, 31.31678], [29.89495, 31.31694], [29.89496, 31.3171], [29.89493, 31.31727], [29.89493, 31.31727], [29.89464, 31.31765], [29.8942, 31.31828], [29.8942, 31.31828], [29.89431, 31.31839], [29.89481, 31.31767], [29.89641, 31.31543], [29.89715, 31.31437], [29.89757, 31.31376], [29.89817, 31.31292], [29.89876, 31.31213], [29.89902, 31.31183], [29.89928, 31.31154], [29.89955, 31.31126], [29.89984, 31.311], [29.90013, 31.31076], [29.90043, 31.31052], [29.90074, 31.31031], [29.90203, 31.30955], [29.90242, 31.30931], [29.9029, 31.30903], [29.90307, 31.30893], [29.90336, 31.30876], [29.90356, 31.30865], [29.90535, 31.30761], [29.90555, 31.30749], [29.9061, 31.30718], [29.90669, 31.30683], [29.90696, 31.30666], [29.90722, 31.30646], [29.90747, 31.30625], [29.90764, 31.30609], [29.90771, 31.30603], [29.90794, 31.30579], [29.90815, 31.30553], [29.90835, 31.30526], [29.90854, 31.30498], [29.90872, 31.30469], [29.90888, 31.30438], [29.90994, 31.30235], [29.9101, 31.30202], [29.91059, 31.30108], [29.91068, 31.30089], [29.91082, 31.30063], [29.91096, 31.30037], [29.91112, 31.30011], [29.91128, 31.29987], [29.91145, 31.29963], [29.91163, 31.2994], [29.91181, 31.29918], [29.91205, 31.29893], [29.91228, 31.29873], [29.91251, 31.29852], [29.91275, 31.29834], [29.91299, 31.29818], [29.9134, 31.29793], [29.9136, 31.29783], [29.91381, 31.29772], [29.91402, 31.29763], [29.91424, 31.29753], [29.91446, 31.29744], [29.91579, 31.29689], [29.91603, 31.2968], [29.91776, 31.29606], [29.91996, 31.29516], [29.91996, 31.29516], [29.92005, 31.29533], [29.92012, 31.29546], [29.92021, 31.29563], [29.92031, 31.29587], [29.92064, 31.29665], [29.92079, 31.29704], [29.9209, 31.29731], [29.92104, 31.29767], [29.92104, 31.29767], [29.92114, 31.29747], [29.92126, 31.29718], [29.92183, 31.29582], [29.92187, 31.29575], [29.92192, 31.29568], [29.92199, 31.29561], [29.92207, 31.29551], [29.92218, 31.29542], [29.92287, 31.29504], [29.92316, 31.29483], [29.92327, 31.29471], [29.92337, 31.29456], [29.92344, 31.29433], [29.92344, 31.29401], [29.92338, 31.29348], [29.92336, 31.29328], [29.92331, 31.29284], [29.92331, 31.29284], [29.92357, 31.29273], [29.92377, 31.2926], [29.92387, 31.29252], [29.92387, 31.29252], [29.92387, 31.29252], [29.92388, 31.29251], [29.92398, 31.2924], [29.92407, 31.29227], [29.92424, 31.29201], [29.92455, 31.29154], [29.92462, 31.29145], [29.9247, 31.29138], [29.92478, 31.29131], [29.92486, 31.29125], [29.92495, 31.2912], [29.92513, 31.2911], [29.92541, 31.29092], [29.92551, 31.29084], [29.92551, 31.29084], [29.9256, 31.29074], [29.92567, 31.29063], [29.92573, 31.2905], [29.92646, 31.28834], [29.9265, 31.2882], [29.92653, 31.28806], [29.92654, 31.28792], [29.92653, 31.28782], [29.92652, 31.28771], [29.92645, 31.28747], [29.92637, 31.28726], [29.92623, 31.28696], [29.9262, 31.28682], [29.92621, 31.28668], [29.92625, 31.28654], [29.92657, 31.28581], [29.92699, 31.28488], [29.92751, 31.28375], [29.92762, 31.28353], [29.92765, 31.28343], [29.92767, 31.28332], [29.92767, 31.28332], [29.928, 31.2831], [29.92825, 31.28291], [29.92844, 31.28277], [29.92866, 31.28262], [29.9289, 31.28244], [29.92903, 31.28235], [29.92917, 31.28227], [29.92925, 31.28223], [29.92925, 31.28223], [29.92922, 31.28212], [29.92909, 31.28154], [29.92907, 31.28145], [29.92907, 31.28145], [29.92966, 31.28127], [29.93073, 31.28094], [29.93099, 31.28084], [29.93139, 31.28067], [29.93178, 31.2805], [29.93292, 31.28], [29.9331, 31.2799], [29.93325, 31.27982], [29.93348, 31.27966], [29.93394, 31.27932], [29.93396, 31.2793], [29.93431, 31.27903], [29.93456, 31.27883], [29.93459, 31.27881], [29.93502, 31.27847], [29.93543, 31.27814], [29.93545, 31.27811], [29.93567, 31.27794], [29.93578, 31.27786], [29.93585, 31.2778], [29.93595, 31.27772], [29.93614, 31.27757], [29.93632, 31.27743], [29.93641, 31.27736], [29.93671, 31.27712], [29.9374, 31.27658], [29.93779, 31.27631], [29.93818, 31.27602], [29.93889, 31.27548], [29.94, 31.27463], [29.94052, 31.27426], [29.94058, 31.27421], [29.94154, 31.2735], [29.94231, 31.27292], [29.94263, 31.27265], [29.94283, 31.27246], [29.94299, 31.27228], [29.94332, 31.27191], [29.9436, 31.2716], [29.94387, 31.27133], [29.94415, 31.27109], [29.94474, 31.27062], [29.94537, 31.27011], [29.94561, 31.26988], [29.94572, 31.26976], [29.94584, 31.26962], [29.94619, 31.26908], [29.94662, 31.26844], [29.94669, 31.26833], [29.94689, 31.26802], [29.94699, 31.26786], [29.94711, 31.26768], [29.9474, 31.26723], [29.94752, 31.26704], [29.94756, 31.26698], [29.94785, 31.26651], [29.948, 31.26627], [29.94817, 31.26597], [29.94837, 31.26564], [29.94852, 31.26536], [29.94883, 31.2648], [29.94909, 31.26431], [29.94925, 31.264], [29.94949, 31.26354], [29.94972, 31.26307], [29.94977, 31.26299], [29.94996, 31.26263], [29.95006, 31.26244], [29.95017, 31.26222], [29.95023, 31.26209], [29.95031, 31.26194], [29.95066, 31.26123], [29.95085, 31.26085], [29.95148, 31.25947], [29.95176, 31.25885], [29.95186, 31.25862], [29.95196, 31.25838], [29.95231, 31.25749], [29.95266, 31.25664], [29.95278, 31.25639], [29.95283, 31.25627], [29.95296, 31.25606], [29.95309, 31.25586], [29.95323, 31.25565], [29.95337, 31.25546], [29.95356, 31.25521], [29.95376, 31.255], [29.95425, 31.25449], [29.95446, 31.25427], [29.95456, 31.25417], [29.95468, 31.25404], [29.95479, 31.25393], [29.95492, 31.25378], [29.95511, 31.25353], [29.95577, 31.25269], [29.95593, 31.25249], [29.9561, 31.25228], [29.95615, 31.25222], [29.95672, 31.25149], [29.95719, 31.25088], [29.95727, 31.25078], [29.95734, 31.2507], [29.95749, 31.25051], [29.95763, 31.25032], [29.95778, 31.25012], [29.95784, 31.25004], [29.95793, 31.24993], [29.95803, 31.24982], [29.95818, 31.24965], [29.95829, 31.24954], [29.9584, 31.24943], [29.95851, 31.24933], [29.95863, 31.24923], [29.95894, 31.24897], [29.9592, 31.24876], [29.95949, 31.24852], [29.95961, 31.24843], [29.95972, 31.24835], [29.96003, 31.24809], [29.96039, 31.24779], [29.96059, 31.24763], [29.96061, 31.24761], [29.96112, 31.24722], [29.96117, 31.24719], [29.96123, 31.24715], [29.96194, 31.24659], [29.96274, 31.24593], [29.96295, 31.24575], [29.9631, 31.24564], [29.96332, 31.24543], [29.96345, 31.2453], [29.96379, 31.24496], [29.96412, 31.24459], [29.96443, 31.2442], [29.96472, 31.24379], [29.96476, 31.24373], [29.96476, 31.24373], [29.96476, 31.24373], [29.96477, 31.24372], [29.96633, 31.24166], [29.96638, 31.24159], [29.96694, 31.24081], [29.96698, 31.24075], [29.96733, 31.24031], [29.96768, 31.23989], [29.96785, 31.23973], [29.96799, 31.2396], [29.96819, 31.2394], [29.96879, 31.23887], [29.96947, 31.23826], [29.97105, 31.23683], [29.97171, 31.23623], [29.97198, 31.236], [29.97227, 31.23579], [29.97257, 31.23561], [29.97286, 31.23544], [29.97297, 31.23539], [29.97318, 31.2353], [29.9735, 31.23518], [29.97434, 31.23487], [29.97441, 31.23485], [29.97573, 31.2344], [29.97598, 31.23429], [29.97612, 31.23424], [29.97623, 31.2342], [29.97808, 31.23331], [29.97879, 31.233], [29.97911, 31.23285], [29.97963, 31.23261], [29.98, 31.23241], [29.98045, 31.23217], [29.98062, 31.23206], [29.98129, 31.23163], [29.9816, 31.2314], [29.98235, 31.23091], [29.98277, 31.23065], [29.98326, 31.23039], [29.98354, 31.23023], [29.98374, 31.23014], [29.98421, 31.22993], [29.98452, 31.22982], [29.98482, 31.22973], [29.9852, 31.22963], [29.98553, 31.22957], [29.98601, 31.22951], [29.98645, 31.22947], [29.98688, 31.22945], [29.98816, 31.22937], [29.98846, 31.22935], [29.98886, 31.22933], [29.98887, 31.22933], [29.98887, 31.22933], [29.98887, 31.22933], [29.98899, 31.22932], [29.98932, 31.22928], [29.98979, 31.2292], [29.99029, 31.22906], [29.99044, 31.229], [29.99086, 31.22886], [29.99104, 31.2288], [29.99129, 31.22871], [29.99177, 31.22858], [29.99216, 31.22851], [29.99263, 31.22844], [29.99298, 31.22841], [29.99356, 31.22839], [29.99372, 31.22839], [29.99425, 31.22841], [29.99505, 31.22845], [29.99572, 31.22847], [29.9974, 31.22854], [29.99749, 31.22854], [29.99758, 31.22856], [29.99762, 31.22857], [29.99766, 31.22859], [29.99769, 31.22862], [29.99773, 31.22866], [29.99773, 31.22866], [29.99771, 31.2287], [29.9977, 31.22874], [29.99768, 31.22882], [29.99766, 31.22894], [29.99762, 31.229], [29.99757, 31.22908], [29.9975, 31.22917], [29.9975, 31.22917], [29.99742, 31.22919], [29.99738, 31.22921], [29.99713, 31.22937], [29.99682, 31.22962], [29.99665, 31.22976], [29.99626, 31.23001], [29.99621, 31.23005], [29.99583, 31.23035], [29.99564, 31.2305], [29.99553, 31.23061], [29.99545, 31.2307], [29.99536, 31.23079], [29.99515, 31.23102], [29.99502, 31.23116]],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#8c564b", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 2, "stroke": true, "weight": 6}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            poly_line_5f10abd5d46532997246f74122db78ca.bindTooltip(
+                `<div>
+                     ميكروباص - الغاز (البنوك) - حلوان
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fcc81d54d4704f7f0c7a9ace91bbe399 = L.circleMarker(
+                [29.863678725586865, 31.32339908652328],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_fcc81d54d4704f7f0c7a9ace91bbe399.bindTooltip(
+                `<div>
+                     موقف الصف
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c2421eb8dfd8591857dbd4404feffccc = L.circleMarker(
+                [29.869044736549924, 31.32009294308444],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_c2421eb8dfd8591857dbd4404feffccc.bindTooltip(
+                `<div>
+                     جامعة حلوان
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_85ad09ab278fdd9fdf663065c81e9d43 = L.circleMarker(
+                [29.879316637323303, 31.314124794918413],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_85ad09ab278fdd9fdf663065c81e9d43.bindTooltip(
+                `<div>
+                     مترو وادي هوف
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9db07dd328e96055000d5e58c029aa67 = L.circleMarker(
+                [29.8937036505287, 31.315688919058427],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_9db07dd328e96055000d5e58c029aa67.bindTooltip(
+                `<div>
+                     شركة ايكون للصناعات الهندسية المعمارية للانشاء والتعمير
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c1811468b07490dd68471ce50bb35ee3 = L.circleMarker(
+                [29.90494367150232, 31.307844924163888],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_c1811468b07490dd68471ce50bb35ee3.bindTooltip(
+                `<div>
+                     مدخل الاوتوستراد من المعصرة
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d2fbae0147fa7fd7b4a871d14110afd7 = L.circleMarker(
+                [29.9131601392484, 31.298084910608097],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_d2fbae0147fa7fd7b4a871d14110afd7.bindTooltip(
+                `<div>
+                     معصرة أوتوستراد
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_280471280663b20eed4dbc86a797fcb7 = L.circleMarker(
+                [29.935075603985965, 31.278421755653333],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_280471280663b20eed4dbc86a797fcb7.bindTooltip(
+                `<div>
+                     كنيسة القديس جورج (كوتسيكا)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a2a2da262eec1ec6d0c4e1c5139162d8 = L.circleMarker(
+                [29.937573078486487, 31.27645712385918],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_a2a2da262eec1ec6d0c4e1c5139162d8.bindTooltip(
+                `<div>
+                     مسجد عبد المنعم رياض (كورنيش النيل)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3e662add7211b6e0c7f39e9f59ad9d52 = L.circleMarker(
+                [29.943016217289184, 31.272236395012605],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_3e662add7211b6e0c7f39e9f59ad9d52.bindTooltip(
+                `<div>
+                     شارع المعهد (كورنيش النيل)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_21b7940d0ba4f6962e9acb252ad203e6 = L.circleMarker(
+                [29.94582158530081, 31.269641729882217],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_21b7940d0ba4f6962e9acb252ad203e6.bindTooltip(
+                `<div>
+                     نادي الشروق (كورنيش النيل)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1fb2fae894e9fde5a19ed7254e5ced0a = L.circleMarker(
+                [29.954259099999987, 31.2544806],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_1fb2fae894e9fde5a19ed7254e5ced0a.bindTooltip(
+                `<div>
+                     شارع وادي النيل (كورنيش النيل)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1b672083c82a31d8af6a5c8d45a631f9 = L.circleMarker(
+                [29.96227577998283, 31.24631392064741],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_1b672083c82a31d8af6a5c8d45a631f9.bindTooltip(
+                `<div>
+                     سوق الفا (كورنيش النيل)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0df9ba672e8953db14ae2e1970b08987 = L.circleMarker(
+                [29.968188, 31.239402],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_0df9ba672e8953db14ae2e1970b08987.bindTooltip(
+                `<div>
+                     مستشفى المعادى العسكرى
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bd9589579cf1e71eb2e556e3c35dfcdf = L.circleMarker(
+                [29.97438699397567, 31.23488047781915],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_bd9589579cf1e71eb2e556e3c35dfcdf.bindTooltip(
+                `<div>
+                     بلاتفورم المعادي
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ca278a115b64bdf4df2c426196f86e1a = L.circleMarker(
+                [29.97854987, 31.23309637],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_ca278a115b64bdf4df2c426196f86e1a.bindTooltip(
+                `<div>
+                     نادي سيلفر نايل (كورنيش المعادي)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ac8ab25faaee64d7686b4abe48a53573 = L.circleMarker(
+                [29.981066030757137, 31.23177161273835],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_ac8ab25faaee64d7686b4abe48a53573.bindTooltip(
+                `<div>
+                     دار السلام
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_21b59ce2de6806958ee38fbb345313a1 = L.circleMarker(
+                [29.985056827297036, 31.22966876934209],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_21b59ce2de6806958ee38fbb345313a1.bindTooltip(
+                `<div>
+                     مستشفى السلام الدولي
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e0fcf87ccb7424bd3b47292441d8cf5a = L.circleMarker(
+                [29.995023391138005, 31.231156805513248],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_e0fcf87ccb7424bd3b47292441d8cf5a.bindTooltip(
+                `<div>
+                     مترو زهراء
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_be09e4bc1f91de55361ce60dbc7f0836 = L.polyline(
+                [[29.995023391138005, 31.231156805513248], [29.995565, 31.231274]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": "5,5", "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 2, "stroke": true, "weight": 6}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            poly_line_be09e4bc1f91de55361ce60dbc7f0836.bindTooltip(
+                `<div>
+                     WALK
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_c777ebb998f112d07b0d36c043bdf642 = L.polyline(
+                [[29.996258, 31.230633], [29.994106, 31.232624], [29.99312, 31.233587], [29.990917, 31.235624], [29.98725, 31.238276], [29.984255, 31.240433], [29.983631, 31.240917], [29.983097, 31.241385], [29.982777, 31.241695], [29.982296, 31.24207], [29.981321, 31.242777], [29.980333, 31.243456], [29.979567, 31.243912], [29.979244, 31.24409], [29.976725, 31.245909], [29.975674, 31.246696], [29.973354, 31.248318], [29.972818, 31.248709], [29.970974, 31.250051]],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#ff7f0e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 2, "stroke": true, "weight": 6}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            poly_line_c777ebb998f112d07b0d36c043bdf642.bindTooltip(
+                `<div>
+                     M1 - Metro Line 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_709accbc85ff93d1d3afe37658ea2076 = L.circleMarker(
+                [29.995565, 31.231274],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_709accbc85ff93d1d3afe37658ea2076.bindTooltip(
+                `<div>
+                     El-Zahraa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5bb430c215b2597f0a12d1378401329d = L.circleMarker(
+                [29.982098, 31.242212],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_5bb430c215b2597f0a12d1378401329d.bindTooltip(
+                `<div>
+                     Dar El-Salam
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2277b4c8290795d4abcde0c2d8c19ddf = L.circleMarker(
+                [29.970186, 31.250628],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            circle_marker_2277b4c8290795d4abcde0c2d8c19ddf.bindTooltip(
+                `<div>
+                     Hadayek El-Maadi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ded758332411287c4cb59d3d34f845d5 = L.marker(
+                [29.89295449999998, 31.2985739],
+                {
+}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            var icon_bae8bf5231b2eb913ed5652bf9b5c6ae = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_ded758332411287c4cb59d3d34f845d5.bindTooltip(
+                `<div>
+                     Start: حدائق حلوان
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ded758332411287c4cb59d3d34f845d5.setIcon(icon_bae8bf5231b2eb913ed5652bf9b5c6ae);
+            
+    
+            var marker_23e737e8d20c3d4c6944492d072a3bbf = L.marker(
+                [29.970186, 31.250628],
+                {
+}
+            ).addTo(map_6f33c99f1fcd3f4d6dfcde9f0cd21daa);
+        
+    
+            var icon_c1c07f635e3a4c0e6881794c12a3a4b3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_23e737e8d20c3d4c6944492d072a3bbf.bindTooltip(
+                `<div>
+                     End: Hadayek El-Maadi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_23e737e8d20c3d4c6944492d072a3bbf.setIcon(icon_c1c07f635e3a4c0e6881794c12a3a4b3);
+            
+</script>
+</html>
